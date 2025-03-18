@@ -3,75 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>내 홈페이지</title>
+    <title>이하은의 홈페이지</title>
+    <!-- 폰트어썸 아이콘 사용 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --bg-color: #fff;
+            --text-color: #333;
+            --border-color: #eee;
+        }
+
+        .dark-mode {
+            --primary-color: #3498db;
+            --secondary-color: #9cb3c9;
+            --bg-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --border-color: #444;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Nanum Gothic', 'Arial', sans-serif;
             line-height: 1.6;
             margin: 0;
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            color: #333;
+            padding: 0;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: background-color 0.3s, color 0.3s;
         }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 네비게이션 */
+        nav {
+            background-color: var(--secondary-color);
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            margin: 0 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
         header {
             text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
         }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 3px solid var(--primary-color);
+        }
+
         h1 {
-            color: #2c3e50;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
         }
+
         section {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: var(--bg-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
+
+        /* 기술 스택 */
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        /* 프로젝트 카드 */
+        .project-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .project-card .content {
+            padding: 15px;
+        }
+
+        /* 소셜 미디어 아이콘 */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: var(--secondary-color);
+            font-size: 24px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+        }
+
+        /* 다크 모드 전환 버튼 */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         footer {
             text-align: center;
             margin-top: 50px;
-            padding-top: 10px;
-            border-top: 1px solid #eee;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
             font-size: 0.9em;
             color: #777;
-        }
-        a {
-            color: #3498db;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>환영합니다</h1>
-        <p>제 개인 홈페이지입니다</p>
-    </header>
-
-    <section id="about">
-        <h2>소개</h2>
-        <p>안녕하세요! 저는 [이하은]입니다. 이 웹사이트는 GitHub Pages를 통해 호스팅되고 있습니다.</p>
-        <p>저에 대한 소개와 관심사, 프로젝트 등을 이곳에 작성할 수 있습니다.</p>
-    </section>
-
-    <section id="projects">
-        <h2>프로젝트</h2>
+    <nav>
         <ul>
-            <li><a href="#">프로젝트 1</a> - 프로젝트에 대한 간단한 설명</li>
-            <li><a href="#">프로젝트 2</a> - 프로젝트에 대한 간단한 설명</li>
-            <li><a href="#">프로젝트 3</a> - 프로젝트에 대한 간단한 설명</li>
+            <li><a href="#about">소개</a></li>
+            <li><a href="#skills">기술 스택</a></li>
+            <li><a href="#projects">프로젝트</a></li>
+            <li><a href="#contact">연락처</a></li>
         </ul>
-    </section>
+    </nav>
 
-    <section id="contact">
-        <h2>연락처</h2>
-        <p>이메일: <a href="mailto:youremail@example.com">youremail@example.com</a></p>
-        <p>GitHub: <a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a></p>
-    </section>
+    <div class="container">
+        <header>
+            <img src="/api/placeholder/150/150" alt="프로필 사진" class="profile-img">
+            <h1>이하은</h1>
+            <p>웹 개발자 | 디자이너 | 창작자</p>
+        </header>
+
+        <section id="about">
+            <h2>소개</h2>
+            <p>안녕하세요! 저는 이하은입니다. 이 웹사이트는 GitHub Pages를 통해 호스팅되고 있습니다.</p>
+            <p>열정적인 웹 개발자로서 사용자 경험을 개선하는 직관적인 웹 인터페이스를 만드는 데 관심이 있습니다. 창의적인 문제 해결과 지속적인 학습을 즐깁니다.</p>
+            <p>취미: 독서, 여행, 사진 촬영, 코딩</p>
+        </section>
+
+        <section id="skills">
+            <h2>기술 스택</h2>
+            <div class="skills">
+                <span class="skill-tag">HTML5</span>
+                <span class="skill-tag">CSS3</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">Node.js</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">Git</span>
+                <span class="skill-tag">Responsive Design</span>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>프로젝트</h2>
+            <div class="project-cards">
+                <div class="project-card">
+                    <img src="/api/placeholder/300/150" alt="프로젝트 1 이미지">
+                    <div class="content">
+                        <h3>프로젝트 1</h3>
+                        <p>반응형 웹 포트폴리오 사이트 제작 프로젝트입니다.</p>
+                        <a href="#">자세히 보기</a>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <img src="/api/placeholder/300/150" alt="프로젝트 2 이미지">
+                    <div class="content">
+                        <h3>프로젝트 2</h3>
+                        <p>JavaScript를 활용한 인터랙티브 웹 애플리케이션입니다.</p>
+                        <a href="#">자세히 보기</a>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <img src="/api/placeholder/300/150" alt="프로젝트 3 이미지">
+                    <div class="content">
+                        <h3>프로젝트 3</h3>
+                        <p>React와 Node.js를 활용한 풀스택 프로젝트입니다.</p>
+                        <a href="#">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>연락처</h2>
+            <p>이메일: <a href="mailto:youremail@example.com">youremail@example.com</a></p>
+            <p>GitHub: <a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a></p>
+            
+            <div class="social-icons">
+                <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+        </section>
+    </div>
+
+    <button class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </button>
 
     <footer>
-        <p>&copy; 2025 [이름]. All rights reserved.</p>
+        <p>&copy; 2025 이하은. All rights reserved.</p>
     </footer>
+
+    <script>
+        // 다크 모드 전환 기능
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            // 아이콘 변경
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // 스크롤 애니메이션 (헤더가 스크롤 시 작아지는 효과)
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.padding = '10px 0';
+            } else {
+                header.style.padding = '20px 0';
+            }
+        });
+    </script>
 </body>
 </html>
