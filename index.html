@@ -316,25 +316,37 @@
             border-color: var(--accent-color);
         }
 
-        .contact-item i {
-            font-size: 1.8rem;
-            color: var(--accent-color);
-            transition: transform 0.3s ease;
-        }
-
-        .contact-item:hover i {
-            transform: scale(1.2);
-        }
-
         .contact-item a {
             color: var(--text-color);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
             font-weight: 500;
+            display: flex;
+            flex-direction: column;
         }
 
         .contact-item a:hover {
             color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .address-detail {
+            font-size: 0.85em;
+            opacity: 0.8;
+            margin-top: 0.3rem;
+        }
+
+        .contact-item i {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            transition: all 0.3s ease;
+            min-width: 2rem;
+            text-align: center;
+        }
+
+        .contact-item:hover i {
+            transform: scale(1.2);
+            color: var(--hover-color);
         }
 
         .theme-toggle {
@@ -539,15 +551,18 @@
             <div class="contact-grid">
                 <div class="contact-item">
                     <i class="fas fa-envelope"></i>
-                    <a href="mailto:leehan090301@gmail.com">leehan090301@gmail.com</a>
+                    <a href="mailto:leehan090301@gmail.com" title="이메일 보내기">leehan090301@gmail.com</a>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>전남과학고등학교</span>
+                    <a href="https://maps.google.com/?q=전남과학고등학교" target="_blank" title="구글 지도에서 보기">
+                        전남과학고등학교<br>
+                        <span class="address-detail">전라남도 나주시 전남과학고길 61</span>
+                    </a>
                 </div>
                 <div class="contact-item">
                     <i class="fab fa-github"></i>
-                    <a href="https://github.com/leehaeunnn" target="_blank">github.com/leehaeunnn</a>
+                    <a href="https://github.com/leehaeunnn" target="_blank" title="GitHub 프로필 방문하기">github.com/leehaeunnn</a>
                 </div>
             </div>
         </section>
