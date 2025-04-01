@@ -499,7 +499,7 @@
         <ul>
             <li><a href="#about">About</a></li>
             <li><a href="#research">Research</a></li>
-            <li><a href="#publications">Publications</a></li>
+            <li><a href="#publications">GitHub Projects</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="index.html">한국어</a></li>
         </ul>
@@ -539,7 +539,7 @@
         </section>
 
         <section id="publications" data-aos="fade-up">
-            <h2>Publications & Projects</h2>
+            <h2>GitHub Projects</h2>
             <div id="github-projects" class="publications">
                 <div class="loading">Loading projects...</div>
             </div>
@@ -593,13 +593,24 @@
                 const projectsContainer = document.getElementById('github-projects');
                 projectsContainer.innerHTML = '';
 
+                // Project descriptions in English
+                const englishDescriptions = {
+                    'leehaeunnn.github.io': 'My personal portfolio website. I use web development techniques and design elements to showcase my projects and research.',
+                    'Projectile-motion': 'A simulation project for projectile motion in physics. It calculates the trajectory of objects based on gravity, initial velocity, and angle.',
+                    'smartgrid-with-CRT': 'This smart grid simulation applies CRT technology to optimize energy distribution and integrate renewable sources. It adjusts dynamically to fluctuations in demand, ensuring efficiency and stability. By using predictive analytics, the system enhances grid resilience and supports the development of sustainable, self-regulating energy networks.',
+                    'Wimshusrt-Machine': 'The simulation reproduced the process of two rotating disks inducing static electricity to accumulate charge, and visually represented the charge moving through the brush and metal sphere.'
+                };
+
                 repos.forEach(repo => {
                     if (!repo.fork) {  // Only show non-forked repositories
                         const projectElement = document.createElement('li');
                         projectElement.setAttribute('data-aos', 'fade-up');
                         
                         const technologies = repo.topics ? repo.topics.join(', ') : 'Not specified';
-                        const description = repo.description || 'No description available';
+                        
+                        // Use English description if available, otherwise use default
+                        const description = englishDescriptions[repo.name] || repo.description || 'No description available';
+                        
                         const updatedAt = new Date(repo.updated_at).toLocaleDateString('en-US', {
                             year: 'numeric',
                             month: 'long',
@@ -616,7 +627,7 @@
                             <p>${description}</p>
                             <div class="project-meta">
                                 <span class="tech-stack">
-                                    <i class="fas fa-tools"></i> ${technologies}
+                                    <i class="fas fa-tools"></i> Technologies: ${technologies}
                                 </span>
                                 <span class="last-updated">
                                     <i class="fas fa-calendar-alt"></i> Last updated: ${updatedAt}
