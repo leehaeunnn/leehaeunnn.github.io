@@ -492,6 +492,37 @@
         .publications li h3 a:hover {
             color: var(--hover-color);
         }
+
+        .certificate-info {
+            margin-top: 2.5rem;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .certificate-info:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+            border-color: var(--accent-color);
+        }
+
+        .certificate-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 600;
+        }
+
+        .certificate-info i {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
     </style>
 </head>
 <body>
@@ -518,6 +549,11 @@
             <h2>About Me</h2>
             <p>Hello! I am a student at Jeonnam Science High School. I have been deeply involved in advanced programming with AI integration through my school's Pre-SRP program.</p>
             <p>Through the school's science research program, I'm participating in various coding projects to build my skills.</p>
+            <div class="certificate-info" data-aos="fade-up">
+                <h3><i class="fas fa-award"></i> SRP Program Completion</h3>
+                <p>Period: December 16, 2024 - February 23, 2025</p>
+                <p>Successfully completed the Science Research Program focused on AI-based programming and data analysis.</p>
+            </div>
         </section>
 
         <section id="research" data-aos="fade-up">
