@@ -494,6 +494,37 @@
         .publications li h3 a:hover {
             color: var(--hover-color);
         }
+
+        .certificate-info {
+            margin-top: 2.5rem;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .certificate-info:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+            border-color: var(--accent-color);
+        }
+
+        .certificate-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 600;
+        }
+
+        .certificate-info i {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
     </style>
 </head>
 <body>
@@ -520,6 +551,11 @@
             <h2>소개</h2>
             <p>안녕하세요! 저는 전남과학고등학교에 재학 중인 학생입니다. 현재 Pre-SRP 프로그램에서부터 AI를 접목한 프로그래밍을 심화적으로 진행하고 있습니다.</p>
             <p>학교의 과학 연구 프로그램을 통해 다양한 코딩 프로젝트에 참여하며 실력을 쌓아가고 있습니다.</p>
+            <div class="certificate-info" data-aos="fade-up">
+                <h3><i class="fas fa-award"></i> SRP 프로그램 수료</h3>
+                <p>기간: 2024년 12월 16일 ~ 2025년 2월 23일</p>
+                <p>AI 기반 프로그래밍과 데이터 분석 중심의 과학 연구 프로그램을 성공적으로 이수했습니다.</p>
+            </div>
         </section>
 
         <section id="research" data-aos="fade-up">
