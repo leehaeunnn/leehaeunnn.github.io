@@ -830,6 +830,8 @@
             
             // Supabase 클라이언트 초기화
             console.log('Supabase 초기화 시작');
+            console.log('SUPABASE_URL:', SUPABASE_URL);
+            console.log('SUPABASE_ANON_KEY:', SUPABASE_ANON_KEY.substring(0, 20) + '...');
             
             if (typeof supabase === 'undefined') {
                 console.error('Supabase 라이브러리가 로드되지 않았습니다.');
@@ -840,6 +842,15 @@
             const { createClient } = supabase;
             const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
             console.log('Supabase 클라이언트 생성 완료');
+            
+            // 연결 테스트
+            supabaseClient.from('leehaeunnn guest book').select('count').then(({ data, error }) => {
+                if (error) {
+                    console.error('Supabase 연결 테스트 실패:', error);
+                } else {
+                    console.log('Supabase 연결 테스트 성공');
+                }
+            });
 
             // 방명록 요소들
             const guestbookForm = document.getElementById('guestbook-form');
