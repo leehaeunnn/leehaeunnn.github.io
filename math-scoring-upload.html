@@ -320,7 +320,7 @@
             <h3 style="color: #fff; font-size: 16px; margin-bottom: 10px;">
                 <i class="fas fa-key"></i> Gemini API 키 입력
             </h3>
-            <input type="password" class="api-key-input" id="apiKey" placeholder="AIzaSy... 형식의 API 키 입력" value="">
+            <input type="password" class="api-key-input" id="apiKey" placeholder="AIzaSy... 형식의 API 키 입력" value="demo-key">
             <div class="api-warning">
                 <i class="fas fa-exclamation-triangle"></i> 
                 테스트용으로만 사용하세요. 실제 서비스는 서버에서 API 키를 관리해야 합니다.
@@ -496,8 +496,10 @@
             }, 3000);
         });
         
+        // 초기 API 키 설정 (데모용)
+        checkAllFilesUploaded();
+        
         // GitHub Actions에서 자동으로 API 키가 주입됩니다
-        // 로컬 테스트시에는 수동으로 입력하세요
         window.addEventListener('DOMContentLoaded', function() {
             // api-config.js가 로드되었는지 확인
             if (typeof API_CONFIG !== 'undefined' && API_CONFIG.GEMINI_API_KEY) {
