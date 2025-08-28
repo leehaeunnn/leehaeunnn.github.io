@@ -1,0 +1,74 @@
+name: Deploy with API Keys
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    
+    - name: Create API config file
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      run: |
+        echo "// Auto-generated API configuration" > api-config.js
+        echo "const API_CONFIG = {" >> api-config.js
+        echo "  GEMINI_API_KEY: '${{ secrets.GEMINI_API_KEY }}'," >> api-config.js
+        echo "  API_ENDPOINT: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-latest:generateContent'" >> api-config.js
+        echo "};" >> api-config.js
+        echo "" >> api-config.js
+        echo "// API 키 보안 검증" >> api-config.js
+        echo "if (typeof API_CONFIG.GEMINI_API_KEY === 'undefined' || API_CONFIG.GEMINI_API_KEY === '') {" >> api-config.js
+        echo "  console.warn('API key not configured');" >> api-config.js
+        echo "}" >> api-config.js
+    
+    - name: Update HTML files with API integration
+      run: |
+        # math-scoring-upload.html에 api-config.js 추가
+        if [ -f "math-scoring-upload.html" ]; then
+          sed -i '/<\/head>/i <script src="api-config.js"></script>' math-scoring-upload.html
+        fi
+        
+        # API 키 입력 필드를 자동으로 채우도록 수정
+        sed -i "s/value=\"demo-key-only\"/value=\"\" id=\"apiKey\"/g" math-scoring-upload.html || true
+        
+        # 페이지 로드 시 API 키 자동 설정
+        cat >> math-scoring-upload.html << 'EOF'
+        <script>
+        // GitHub Actions에서 주입된 API 키 자동 로드
+        window.addEventListener('DOMContentLoaded', function() {
+          if (typeof API_CONFIG !== 'undefined' && API_CONFIG.GEMINI_API_KEY) {
+            const apiKeyInput = document.getElementById('apiKey');
+            if (apiKeyInput && !apiKeyInput.value) {
+              apiKeyInput.value = API_CONFIG.GEMINI_API_KEY;
+              checkAllFilesUploaded();
+            }
+          }
+        });
+        </script>
+        EOF
+    
+    - name: Deploy to GitHub Pages
+      run: |
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        git add .
+        git diff --staged --quiet || git commit -m "Deploy with API keys [skip ci]"
+        git push origin main || echo "No changes to push"
+    
+    - name: Clean sensitive files
+      if: always()
+      run: |
+        rm -f api-config.js
+        echo "Cleaned sensitive files"

@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>수학 채점 시스템 - 실제 데모</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- GitHub Actions에서 자동으로 생성되는 API 설정 파일 -->
+    <script src="api-config.js" onerror="console.log('API config not found - using manual input')"></script>
     <style>
         * {
             margin: 0;
@@ -494,10 +496,27 @@
             }, 3000);
         });
         
-        // 기본 API 키 설정 (데모용)
-        // 실제 사용시 제거해야 함
-        document.getElementById('apiKey').value = 'demo-key-only';
-        checkAllFilesUploaded();
+        // GitHub Actions에서 자동으로 API 키가 주입됩니다
+        // 로컬 테스트시에는 수동으로 입력하세요
+        window.addEventListener('DOMContentLoaded', function() {
+            // api-config.js가 로드되었는지 확인
+            if (typeof API_CONFIG !== 'undefined' && API_CONFIG.GEMINI_API_KEY) {
+                const apiKeyInput = document.getElementById('apiKey');
+                if (apiKeyInput) {
+                    apiKeyInput.value = API_CONFIG.GEMINI_API_KEY;
+                    apiKeyInput.style.display = 'none';
+                    
+                    // API 키가 자동 로드되었음을 표시
+                    const apiSection = document.querySelector('.api-key-section');
+                    const autoLoadMsg = document.createElement('div');
+                    autoLoadMsg.style.cssText = 'padding: 10px; background: #4ade80; color: white; border-radius: 6px; margin-top: 10px;';
+                    autoLoadMsg.innerHTML = '<i class="fas fa-check-circle"></i> API 키가 자동으로 구성되었습니다.';
+                    apiSection.appendChild(autoLoadMsg);
+                    
+                    checkAllFilesUploaded();
+                }
+            }
+        });
     </script>
 </body>
 </html>
