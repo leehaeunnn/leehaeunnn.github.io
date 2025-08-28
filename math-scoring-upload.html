@@ -94,6 +94,12 @@
             background: rgba(74, 222, 128, 0.05);
         }
         
+        .upload-area.dragover {
+            border-color: #22d3ee;
+            background: rgba(34, 211, 238, 0.1);
+            transform: scale(1.02);
+        }
+        
         .upload-icon {
             font-size: 48px;
             color: rgba(255,255,255,0.3);
@@ -335,8 +341,8 @@
                     <div class="upload-icon">
                         <i class="fas fa-cloud-upload-alt"></i>
                     </div>
-                    <div class="upload-text">클릭하여 파일 선택</div>
-                    <div class="upload-hint">PNG, JPG, JPEG 지원</div>
+                    <div class="upload-text">클릭 또는 드래그하여 파일 업로드</div>
+                    <div class="upload-hint">PNG, JPG, GIF, WebP 지원 (최대 10MB)</div>
                     <img class="preview-img" id="problemPreview">
                     <div class="file-name" id="problemFileName"></div>
                 </div>
@@ -349,8 +355,8 @@
                     <div class="upload-icon">
                         <i class="fas fa-cloud-upload-alt"></i>
                     </div>
-                    <div class="upload-text">클릭하여 파일 선택</div>
-                    <div class="upload-hint">PNG, JPG, JPEG 지원</div>
+                    <div class="upload-text">클릭 또는 드래그하여 파일 업로드</div>
+                    <div class="upload-hint">PNG, JPG, GIF, WebP 지원 (최대 10MB)</div>
                     <img class="preview-img" id="answerPreview">
                     <div class="file-name" id="answerFileName"></div>
                 </div>
@@ -363,8 +369,8 @@
                     <div class="upload-icon">
                         <i class="fas fa-cloud-upload-alt"></i>
                     </div>
-                    <div class="upload-text">클릭하여 파일 선택</div>
-                    <div class="upload-hint">PNG, JPG, JPEG 지원</div>
+                    <div class="upload-text">클릭 또는 드래그하여 파일 업로드</div>
+                    <div class="upload-hint">PNG, JPG, GIF, WebP 지원 (최대 10MB)</div>
                     <img class="preview-img" id="studentPreview">
                     <div class="file-name" id="studentFileName"></div>
                 </div>
@@ -420,25 +426,76 @@
             const fileName = document.getElementById(fileNameId);
             const area = input.parentElement;
             
+            // 파일 선택 이벤트
             input.addEventListener('change', (e) => {
                 const file = e.target.files[0];
-                if (file) {
-                    uploadedFiles[fileType] = file;
-                    
-                    // 미리보기
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        preview.src = e.target.result;
-                        preview.classList.add('show');
-                        fileName.textContent = file.name;
-                        fileName.classList.add('show');
-                        area.classList.add('active');
-                    };
-                    reader.readAsDataURL(file);
-                    
-                    checkAllFilesUploaded();
+                if (file && validateFile(file)) {
+                    processFile(file, fileType, preview, fileName, area);
                 }
             });
+            
+            // 드래그 앤 드롭 이벤트
+            area.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                area.classList.add('dragover');
+            });
+            
+            area.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                area.classList.remove('dragover');
+            });
+            
+            area.addEventListener('drop', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                area.classList.remove('dragover');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    const file = files[0];
+                    if (validateFile(file)) {
+                        processFile(file, fileType, preview, fileName, area);
+                    }
+                }
+            });
+        }
+        
+        // 파일 유효성 검사
+        function validateFile(file) {
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+            const maxSize = 10 * 1024 * 1024; // 10MB
+            
+            if (!validTypes.includes(file.type)) {
+                alert('이미지 파일만 업로드 가능합니다. (JPG, PNG, GIF, WebP)');
+                return false;
+            }
+            
+            if (file.size > maxSize) {
+                alert('파일 크기는 10MB 이하여야 합니다.');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // 파일 처리
+        function processFile(file, fileType, preview, fileName, area) {
+            uploadedFiles[fileType] = file;
+            
+            // 미리보기
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.src = e.target.result;
+                preview.classList.add('show');
+                fileName.textContent = file.name;
+                fileName.classList.add('show');
+                area.classList.add('active');
+            };
+            reader.readAsDataURL(file);
+            
+            checkAllFilesUploaded();
         }
         
         // 모든 파일이 업로드되었는지 확인
