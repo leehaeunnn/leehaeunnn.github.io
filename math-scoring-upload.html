@@ -521,13 +521,22 @@
             }
         }
         
-        // API 키 입력 감지
-        document.getElementById('apiKey').addEventListener('input', checkAllFilesUploaded);
-        
-        // 파일 업로드 이벤트 연결
-        handleFileUpload('problemFile', 'problemPreview', 'problemFileName', 'problem');
-        handleFileUpload('answerFile', 'answerPreview', 'answerFileName', 'answer');
-        handleFileUpload('studentFile', 'studentPreview', 'studentFileName', 'student');
+        // 모든 초기화를 DOMContentLoaded 후에 실행
+        document.addEventListener('DOMContentLoaded', function() {
+            // API 키 입력 감지
+            document.getElementById('apiKey').addEventListener('input', checkAllFilesUploaded);
+            
+            // 파일 업로드 이벤트 연결
+            handleFileUpload('problemFile', 'problemPreview', 'problemFileName', 'problem');
+            handleFileUpload('answerFile', 'answerPreview', 'answerFileName', 'answer');
+            handleFileUpload('studentFile', 'studentPreview', 'studentFileName', 'student');
+            
+            // 채점 버튼 이벤트 연결
+            setupGradeButton();
+            
+            // 초기 체크
+            checkAllFilesUploaded();
+        });
         
         // 이미지를 base64로 변환
         async function fileToBase64(file) {
@@ -542,8 +551,9 @@
             });
         }
         
-        // 채점 시작
-        document.getElementById('gradeBtn').addEventListener('click', async () => {
+        // 채점 시작 버튼 이벤트 (DOMContentLoaded 후에 등록)
+        function setupGradeButton() {
+            document.getElementById('gradeBtn').addEventListener('click', async () => {
             const apiKey = document.getElementById('apiKey').value;
             const loadingOverlay = document.getElementById('loadingOverlay');
             const resultSection = document.getElementById('resultSection');
@@ -612,7 +622,8 @@
                 // 데모 모드 (API 키가 없거나 demo-key인 경우)
                 displayDemoResult();
             }
-        });
+            });
+        }
         
         // 데모 결과 표시
         function displayDemoResult() {
@@ -666,9 +677,6 @@
         
         // 페이지 로드 완료 후 초기화
         window.addEventListener('DOMContentLoaded', function() {
-            // 초기 체크
-            checkAllFilesUploaded();
-            
             // GitHub Actions에서 자동으로 API 키가 주입됩니다
             // api-config.js가 로드되었는지 확인
             if (typeof API_CONFIG !== 'undefined' && API_CONFIG.GEMINI_API_KEY) {
