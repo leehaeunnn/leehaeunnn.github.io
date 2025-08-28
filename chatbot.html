@@ -27,8 +27,9 @@
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             width: 100%;
-            max-width: 500px;
-            height: 700px;
+            max-width: 800px;
+            height: 85vh;
+            max-height: 900px;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -114,9 +115,11 @@
         
         .message-bubble {
             max-width: 70%;
-            padding: 12px 16px;
+            padding: 15px 20px;
             border-radius: 18px;
             word-wrap: break-word;
+            font-size: 1.05em;
+            line-height: 1.5;
         }
         
         .message.haeun .message-bubble {
@@ -265,18 +268,19 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
         
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .chat-container {
-                height: 90vh;
+                height: 100vh;
                 max-width: 100%;
+                max-height: 100vh;
                 border-radius: 0;
             }
             
             .back-link {
-                top: auto;
-                bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
+                top: 10px;
+                left: 10px;
+                padding: 8px 15px;
+                font-size: 0.9em;
             }
         }
     </style>
