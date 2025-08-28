@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 수학 채점 시스템 - Claude API 활용</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .hero-image {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            margin: 30px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            color: #667eea;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .feature-card {
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .workflow-section {
+            background: #f0f0f0;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+        
+        .workflow-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .workflow-step:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .step-content h3 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        
+        .tech-stack-section {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+        
+        .tech-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .tech-badge {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: transform 0.3s ease;
+        }
+        
+        .tech-badge:hover {
+            transform: scale(1.05);
+        }
+        
+        .api-info {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        
+        .api-info h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        @media (max-width: 768px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .workflow-step {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .step-number {
+                margin: 0 0 15px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 AI 기반 수학 채점 시스템</h1>
+        
+        <div class="hero-section">
+            <p style="font-size: 1.2em; color: #666; margin-bottom: 20px;">
+                Claude AI를 활용한 고등학교 수학 문제 자동 채점 솔루션
+            </p>
+            <div class="hero-image">
+                <i class="fas fa-robot"></i>
+            </div>
+        </div>
+        
+        <div class="workflow-section">
+            <h2 style="color: #333; margin-bottom: 30px;">📋 작동 과정</h2>
+            
+            <div class="workflow-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>이미지 업로드</h3>
+                    <p>문제지, 정답지, 학생 답안을 PNG/JPG 형식으로 업로드합니다.</p>
+                </div>
+            </div>
+            
+            <div class="workflow-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>AI 분석</h3>
+                    <p>Claude 3.7 Sonnet이 이미지를 분석하여 문제와 답안을 이해합니다.</p>
+                </div>
+            </div>
+            
+            <div class="workflow-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>자동 채점</h3>
+                    <p>미리 설정된 채점 기준에 따라 부분 점수까지 세밀하게 채점합니다.</p>
+                </div>
+            </div>
+            
+            <div class="workflow-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>결과 출력</h3>
+                    <p>채점 결과와 피드백을 CSV 파일로 내보내어 관리합니다.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                <div class="feature-title">Claude 3.7 Sonnet</div>
+                <p>최신 AI 모델을 사용하여 수학 문제를 정확하게 이해하고 채점합니다.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-image"></i></div>
+                <div class="feature-title">이미지 인식</div>
+                <p>손글씨, 수식, 그래프 등 다양한 형태의 답안을 인식할 수 있습니다.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-check-double"></i></div>
+                <div class="feature-title">부분 점수</div>
+                <p>풀이 과정을 분석하여 단계별 부분 점수를 부여합니다.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                <div class="feature-title">상세한 피드백</div>
+                <p>틀린 부분에 대한 구체적인 피드백을 제공합니다.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-file-csv"></i></div>
+                <div class="feature-title">CSV 내보내기</div>
+                <p>채점 결과를 엑셀에서 바로 열 수 있는 CSV 형식으로 저장합니다.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <div class="feature-title">실시간 진행 상황</div>
+                <p>채점 진행 상황을 실시간으로 확인할 수 있습니다.</p>
+            </div>
+        </div>
+        
+        <div class="api-info">
+            <h3>🔑 API 사용 정보</h3>
+            <p><strong>Anthropic Claude API</strong>를 사용합니다.</p>
+            <ul style="margin-top: 10px; margin-left: 20px;">
+                <li>API 키가 필요합니다 (Anthropic 콘솔에서 발급)</li>
+                <li>요청당 비용이 발생합니다 (이미지 크기와 텍스트 양에 따라 다름)</li>
+                <li>환경 변수로 안전하게 관리됩니다</li>
+            </ul>
+        </div>
+        
+        <div class="tech-stack-section">
+            <h2 style="color: #333; margin-bottom: 20px;">🛠 기술 스택</h2>
+            <div class="tech-badges">
+                <span class="tech-badge">Python 3</span>
+                <span class="tech-badge">Flask</span>
+                <span class="tech-badge">Claude 3.7 Sonnet API</span>
+                <span class="tech-badge">Anthropic SDK</span>
+                <span class="tech-badge">Pillow (PIL)</span>
+                <span class="tech-badge">Pandas</span>
+                <span class="tech-badge">HTML/CSS/JavaScript</span>
+            </div>
+        </div>
+        
+        <div class="code-block">
+<pre># 설치 및 실행
+pip install -r requirements.txt
+
+# .env 파일에 API 키 설정
+ANTHROPIC_API_KEY=your-api-key-here
+CLAUDE_MODEL=claude-3-7-sonnet-20250219
+
+# 서버 실행
+python main.py</pre>
+        </div>
+        
+        <div class="button-group">
+            <a href="index.html" class="btn btn-secondary">← 메인으로</a>
+            <a href="https://github.com/leehaeunnn/Math-Scoring" target="_blank" class="btn btn-primary">
+                <i class="fab fa-github"></i> GitHub 저장소
+            </a>
+            <a href="math-scoring-demo.html" class="btn btn-secondary">간단한 데모 보기</a>
+        </div>
+    </div>
+</body>
+</html>
