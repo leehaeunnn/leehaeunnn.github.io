@@ -428,9 +428,13 @@
             
             // 파일 선택 이벤트
             input.addEventListener('change', (e) => {
+                console.log(`File input changed for ${fileType}`);
                 const file = e.target.files[0];
+                console.log(`Selected file:`, file);
                 if (file && validateFile(file)) {
                     processFile(file, fileType, preview, fileName, area);
+                } else {
+                    console.log(`File validation failed for ${fileType}`);
                 }
             });
             
@@ -483,6 +487,7 @@
         // 파일 처리
         function processFile(file, fileType, preview, fileName, area) {
             uploadedFiles[fileType] = file;
+            console.log(`File uploaded for ${fileType}:`, file.name, uploadedFiles);
             
             // 미리보기
             const reader = new FileReader();
@@ -492,10 +497,11 @@
                 fileName.textContent = file.name;
                 fileName.classList.add('show');
                 area.classList.add('active');
+                
+                // 파일 읽기 완료 후 다시 체크
+                checkAllFilesUploaded();
             };
             reader.readAsDataURL(file);
-            
-            checkAllFilesUploaded();
         }
         
         // 모든 파일이 업로드되었는지 확인
@@ -503,40 +509,36 @@
             const gradeBtn = document.getElementById('gradeBtn');
             const apiKey = document.getElementById('apiKey').value;
             
+            const hasAllFiles = uploadedFiles.problem !== null && 
+                              uploadedFiles.answer !== null && 
+                              uploadedFiles.student !== null;
+            const hasApiKey = apiKey && apiKey.length > 0;
+            
             console.log('Checking files:', {
-                problem: !!uploadedFiles.problem,
-                answer: !!uploadedFiles.answer,
-                student: !!uploadedFiles.student,
-                apiKey: !!apiKey
+                problem: uploadedFiles.problem ? uploadedFiles.problem.name : 'none',
+                answer: uploadedFiles.answer ? uploadedFiles.answer.name : 'none',
+                student: uploadedFiles.student ? uploadedFiles.student.name : 'none',
+                apiKey: hasApiKey
             });
             
-            if (uploadedFiles.problem && uploadedFiles.answer && uploadedFiles.student && apiKey) {
+            if (hasAllFiles && hasApiKey) {
                 gradeBtn.disabled = false;
                 gradeBtn.style.cursor = 'pointer';
-                console.log('Button enabled!');
+                gradeBtn.style.opacity = '1';
+                console.log('✅ Button enabled! All files uploaded and API key present.');
             } else {
                 gradeBtn.disabled = true;
                 gradeBtn.style.cursor = 'not-allowed';
-                console.log('Button disabled');
+                gradeBtn.style.opacity = '0.5';
+                console.log('❌ Button disabled. Missing:', 
+                    !uploadedFiles.problem ? 'problem' : '',
+                    !uploadedFiles.answer ? 'answer' : '',
+                    !uploadedFiles.student ? 'student' : '',
+                    !hasApiKey ? 'API key' : ''
+                );
             }
         }
         
-        // 모든 초기화를 DOMContentLoaded 후에 실행
-        document.addEventListener('DOMContentLoaded', function() {
-            // API 키 입력 감지
-            document.getElementById('apiKey').addEventListener('input', checkAllFilesUploaded);
-            
-            // 파일 업로드 이벤트 연결
-            handleFileUpload('problemFile', 'problemPreview', 'problemFileName', 'problem');
-            handleFileUpload('answerFile', 'answerPreview', 'answerFileName', 'answer');
-            handleFileUpload('studentFile', 'studentPreview', 'studentFileName', 'student');
-            
-            // 채점 버튼 이벤트 연결
-            setupGradeButton();
-            
-            // 초기 체크
-            checkAllFilesUploaded();
-        });
         
         // 이미지를 base64로 변환
         async function fileToBase64(file) {
@@ -677,13 +679,40 @@
         
         // 페이지 로드 완료 후 초기화
         window.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing all components...');
+            
+            // API 키 입력 감지
+            const apiKeyInput = document.getElementById('apiKey');
+            if (apiKeyInput) {
+                apiKeyInput.addEventListener('input', function() {
+                    console.log('API Key changed:', this.value.length > 0 ? 'present' : 'empty');
+                    checkAllFilesUploaded();
+                });
+                
+                // 테스트용 기본 API 키 설정 (개발용)
+                // 실제 사용시에는 실제 API 키로 교체해야 함
+                if (!apiKeyInput.value) {
+                    apiKeyInput.value = 'demo-key-only';
+                }
+            } else {
+                console.error('API Key input not found!');
+            }
+            
+            // 파일 업로드 이벤트 연결
+            handleFileUpload('problemFile', 'problemPreview', 'problemFileName', 'problem');
+            handleFileUpload('answerFile', 'answerPreview', 'answerFileName', 'answer');
+            handleFileUpload('studentFile', 'studentPreview', 'studentFileName', 'student');
+            
+            // 채점 버튼 이벤트 연결
+            setupGradeButton();
+            
             // GitHub Actions에서 자동으로 API 키가 주입됩니다
             // api-config.js가 로드되었는지 확인
             if (typeof API_CONFIG !== 'undefined' && API_CONFIG.GEMINI_API_KEY) {
-                const apiKeyInput = document.getElementById('apiKey');
                 if (apiKeyInput) {
                     apiKeyInput.value = API_CONFIG.GEMINI_API_KEY;
                     apiKeyInput.style.display = 'none';
+                    console.log('API key loaded from config');
                     
                     // API 키가 자동 로드되었음을 표시
                     const apiSection = document.querySelector('.api-key-section');
@@ -691,10 +720,11 @@
                     autoLoadMsg.style.cssText = 'padding: 10px; background: #4ade80; color: white; border-radius: 6px; margin-top: 10px;';
                     autoLoadMsg.innerHTML = '<i class="fas fa-check-circle"></i> API 키가 자동으로 구성되었습니다.';
                     apiSection.appendChild(autoLoadMsg);
-                    
-                    checkAllFilesUploaded();
                 }
             }
+            
+            // 초기 체크
+            checkAllFilesUploaded();
         });
     </script>
 </body>
