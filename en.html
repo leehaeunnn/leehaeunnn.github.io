@@ -644,7 +644,9 @@
                     'leehaeunnn.github.io': 'My personal portfolio website. I use web development techniques and design elements to showcase my projects and research.',
                     'Projectile-motion': 'A simulation project for projectile motion in physics. It calculates the trajectory of objects based on gravity, initial velocity, and angle.',
                     'smartgrid-with-CRT': 'This smart grid simulation applies CRT technology to optimize energy distribution and integrate renewable sources. It adjusts dynamically to fluctuations in demand, ensuring efficiency and stability. By using predictive analytics, the system enhances grid resilience and supports the development of sustainable, self-regulating energy networks.',
-                    'Wimshusrt-Machine': 'The simulation reproduced the process of two rotating disks inducing static electricity to accumulate charge, and visually represented the charge moving through the brush and metal sphere.'
+                    'Wimshusrt-Machine': 'The simulation reproduced the process of two rotating disks inducing static electricity to accumulate charge, and visually represented the charge moving through the brush and metal sphere.',
+                    'NEW-Math-Scoring': 'An online math problem scoring system built with Next.js and MongoDB. Supports LaTeX formulas and provides automatic grading with detailed feedback.',
+                    'Math-Scoring': 'An online math problem scoring system built with Next.js and MongoDB. Supports LaTeX formulas and provides automatic grading with detailed feedback.'
                 };
 
                 repos.forEach(repo => {
@@ -663,12 +665,25 @@
                             day: 'numeric'
                         });
 
+                        // Set project detail page links
+                        let projectLink = repo.html_url;
+                        let hasDetailPage = false;
+                        
+                        if (repo.name === 'NEW-Math-Scoring' || repo.name === 'Math-Scoring') {
+                            projectLink = 'math-scoring.html';
+                            hasDetailPage = true;
+                        } else if (repo.name === 'Projectile-motion') {
+                            projectLink = 'projectile-motion.html';
+                            hasDetailPage = true;
+                        }
+
                         projectElement.innerHTML = `
                             <h3>
                                 <i class="fas fa-code-branch"></i>
-                                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer">
-                                    ${repo.name}
-                                </a>
+                                ${hasDetailPage ? 
+                                    `<a href="${projectLink}">${repo.name}</a>` :
+                                    `<a href="${repo.html_url}" target="_blank" rel="noopener noreferrer">${repo.name}</a>`
+                                }
                             </h3>
                             <p>${description}</p>
                             <div class="project-meta">
