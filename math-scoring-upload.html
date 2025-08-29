@@ -524,12 +524,12 @@
                 gradeBtn.disabled = false;
                 gradeBtn.style.cursor = 'pointer';
                 gradeBtn.style.opacity = '1';
-                console.log('✅ Button enabled! Student answer uploaded and API key present.');
+                console.log('Button enabled! Student answer uploaded and API key present.');
             } else {
                 gradeBtn.disabled = true;
                 gradeBtn.style.cursor = 'not-allowed';
                 gradeBtn.style.opacity = '0.5';
-                console.log('❌ Button disabled. Missing:', 
+                console.log('Button disabled. Missing:',
                     !uploadedFiles.student ? 'student answer (required)' : '',
                     !hasApiKey ? 'API key' : ''
                 );
