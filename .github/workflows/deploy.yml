@@ -6,17 +6,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
     
     - name: Create API config file
       env:
@@ -24,70 +19,14 @@ jobs:
       run: |
         echo "// Auto-generated API configuration" > api-config.js
         echo "const API_CONFIG = {" >> api-config.js
-        echo "  GEMINI_API_KEY: '${{ secrets.GEMINI_API_KEY }}'," >> api-config.js
-        echo "  API_ENDPOINT: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-latest:generateContent'" >> api-config.js
+        echo "  GEMINI_API_KEY: '${GEMINI_API_KEY}'" >> api-config.js
         echo "};" >> api-config.js
-        echo "" >> api-config.js
-        echo "// API 키 보안 검증" >> api-config.js
-        echo "if (typeof API_CONFIG.GEMINI_API_KEY === 'undefined' || API_CONFIG.GEMINI_API_KEY === '') {" >> api-config.js
-        echo "  console.warn('API key not configured');" >> api-config.js
-        echo "}" >> api-config.js
-    
-    - name: Update HTML files with API integration
-      run: |
-        # math-scoring-upload.html에 api-config.js 추가
-        if [ -f "math-scoring-upload.html" ]; then
-          sed -i '/<\/head>/i <script src="api-config.js"></script>' math-scoring-upload.html
-        fi
-
-        # chatbot.html에 api-config.js 추가
-        if [ -f "chatbot.html" ]; then
-          # 이미 추가되어 있는지 확인
-          if ! grep -q "api-config.js" chatbot.html; then
-            sed -i '/<\/head>/i <script src="api-config.js" onerror="console.log('\''API config not found - using manual input'\'')"></script>' chatbot.html
-          fi
-        fi
         
-        # API 키 입력 필드를 자동으로 채우도록 수정
-        sed -i "s/value=\"demo-key-only\"/value=\"\" id=\"apiKey\"/g" math-scoring-upload.html || true
-        
-        # 페이지 로드 시 API 키 자동 설정 (math-scoring-upload.html)
-        cat >> math-scoring-upload.html << 'EOF'
-        <script>
-        // GitHub Actions에서 주입된 API 키 자동 로드
-        window.addEventListener('DOMContentLoaded', function() {
-          if (typeof API_CONFIG !== 'undefined' && API_CONFIG.GEMINI_API_KEY) {
-            const apiKeyInput = document.getElementById('apiKey');
-            if (apiKeyInput && !apiKeyInput.value) {
-              apiKeyInput.value = API_CONFIG.GEMINI_API_KEY;
-              checkAllFilesUploaded();
-            }
-          }
-        });
-        </script>
-        EOF
-
-        # 챗봇용 API 키 설정 (chatbot.html)
-        if [ -f "chatbot.html" ]; then
-          cat >> chatbot.html << 'EOF'
-        <script>
-        // GitHub Actions에서 주입된 API 키 자동 로드 (챗봇용)
-        window.addEventListener('DOMContentLoaded', function() {
-          // API_CONFIG가 로드되었는지 확인하고 챗봇 초기화
-          console.log('챗봇 초기화 중...');
-          if (typeof API_CONFIG !== 'undefined') {
-            console.log('API_CONFIG 로드됨:', API_CONFIG.GEMINI_API_KEY ? 'API 키 있음' : 'API 키 없음');
-          } else {
-            console.log('API_CONFIG 로드되지 않음');
-          }
-        });
-        </script>
-        EOF
-        fi
+        echo "API config file created with key: ${GEMINI_API_KEY:0:10}..."
     
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./
-        keep_files: true
+        publish_branch: gh-pages
