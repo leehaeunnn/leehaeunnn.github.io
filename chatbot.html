@@ -546,7 +546,7 @@
 
                 // API 키 오류인 경우 안내 메시지
                 if (error.message.includes('API 키')) {
-                    return `Gemini API 키가 설정되지 않았습니다.\n\n수학 채점 시스템(math-scoring-upload.html)에서 API 키를 먼저 설정해주세요:\n1. Google AI Studio에서 API 키 발급\n2. GitHub Secrets에 GEMINI_API_KEY 추가\n3. 페이지를 새로고침`;
+                    return `API 키가 설정되지 않았습니다. 상단의 'API 설정' 버튼을 클릭해서 Gemini API 키를 입력해주세요.\n\nAPI 키 발급 방법:\n1. Google AI Studio (aistudio.google.com)에서 API 키 발급\n2. 상단 'API 설정' 버튼 클릭\n3. API 키 입력 후 저장`;
                 }
 
                 return `죄송합니다. 일시적인 오류가 발생했어요. 잠시 후 다시 시도해주세요. (${error.message})`;
