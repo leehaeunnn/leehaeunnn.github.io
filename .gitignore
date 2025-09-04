@@ -60,4 +60,4 @@ coverage/
 *.min.js
 *.min.css
 !dist/*.min.js
-!dist/*.min.css
+!dist/*.min.cssapi-config.js
