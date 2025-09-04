@@ -302,6 +302,9 @@
                     <span>온라인</span>
                 </div>
             </div>
+            <button onclick="openApiKeyModal()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 0.9em;">
+                <i class="fas fa-key"></i> API 설정
+            </button>
         </div>
         
         <div class="chat-messages" id="chatMessages">
@@ -349,11 +352,50 @@
         </div>
     </div>
     
+    <!-- API Key Modal -->
+    <div id="apiKeyModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 30px; border-radius: 15px; max-width: 400px; width: 90%;">
+            <h3 style="margin-bottom: 15px;">Gemini API 키 설정</h3>
+            <input type="password" id="apiKeyModalInput" placeholder="AIzaSy..." style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; margin-bottom: 15px;">
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button onclick="closeApiKeyModal()" style="padding: 8px 20px; background: #e0e0e0; border: none; border-radius: 8px; cursor: pointer;">취소</button>
+                <button onclick="saveApiKey()" style="padding: 8px 20px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer;">저장</button>
+            </div>
+        </div>
+    </div>
+    
     <script>
         const chatMessages = document.getElementById('chatMessages');
         const chatInput = document.getElementById('chatInput');
         const sendBtn = document.getElementById('sendBtn');
         const typingIndicator = document.getElementById('typingIndicator');
+        
+        // API 키 모달 함수들
+        function openApiKeyModal() {
+            const modal = document.getElementById('apiKeyModal');
+            modal.style.display = 'flex';
+            const input = document.getElementById('apiKeyModalInput');
+            const stored = localStorage.getItem('gemini_api_key');
+            if (stored && stored !== 'demo-key-only') {
+                input.value = stored;
+            }
+        }
+        
+        function closeApiKeyModal() {
+            document.getElementById('apiKeyModal').style.display = 'none';
+        }
+        
+        function saveApiKey() {
+            const input = document.getElementById('apiKeyModalInput');
+            const apiKey = input.value.trim();
+            if (apiKey && apiKey.startsWith('AIza')) {
+                localStorage.setItem('gemini_api_key', apiKey);
+                closeApiKeyModal();
+                addMessage('API 키가 저장되었습니다! 이제 대화를 시작할 수 있어요.', false);
+            } else {
+                alert('올바른 API 키를 입력해주세요 (AIzaSy...로 시작)');
+            }
+        }
         
         // 채팅 히스토리 저장
         let chatHistory = [];
@@ -384,30 +426,18 @@
 
         // Gemini API 호출 함수
         async function callGeminiAPI(message, history = []) {
-            // API 키 가져오기 (GitHub Actions에서 주입되거나 수동 입력)
-            let apiKey = '';
-
-            // GitHub Actions에서 자동으로 설정된 API 키 확인
-            if (typeof API_CONFIG !== 'undefined' && API_CONFIG.GEMINI_API_KEY) {
+            // API 키 가져오기 (localStorage 우선)
+            let apiKey = localStorage.getItem('gemini_api_key') || '';
+            
+            // GitHub Actions에서 자동으로 설정된 API 키 확인 (없으면)
+            if (!apiKey && typeof API_CONFIG !== 'undefined' && API_CONFIG.GEMINI_API_KEY) {
                 apiKey = API_CONFIG.GEMINI_API_KEY;
+                localStorage.setItem('gemini_api_key', apiKey);
             }
-
-            // 수동 입력된 API 키 확인
-            if (!apiKey) {
-                const manualApiKey = document.getElementById('manualApiKey');
-                if (manualApiKey && manualApiKey.value) {
-                    apiKey = manualApiKey.value.trim();
-                }
-            }
-
+            
             // API 키가 없으면 사용자에게 입력 요청
-            if (!apiKey || apiKey === 'demo-key') {
-                // API 키 입력 섹션 표시
-                const apiKeySection = document.getElementById('apiKeySection');
-                if (apiKeySection) {
-                    apiKeySection.style.display = 'block';
-                }
-                throw new Error('Gemini API 키가 설정되지 않았습니다. 위의 입력창에 API 키를 입력하거나 GitHub Secrets에 GEMINI_API_KEY를 추가해주세요.');
+            if (!apiKey || apiKey === 'demo-key' || apiKey === 'demo-key-only') {
+                throw new Error('API 키를 설정해주세요. 상단의 API 설정 버튼을 클릭하세요.');
             }
 
             // 채팅 히스토리 구성
