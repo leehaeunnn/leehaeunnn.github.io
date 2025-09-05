@@ -307,6 +307,14 @@
             </button>
         </div>
         
+        <!-- API 키 입력 섹션 (처음에 표시) -->
+        <div class="api-input-section" id="apiInputSection" style="padding: 20px; background: #f0f0f0; display: none;">
+            <h3 style="margin-bottom: 10px;">API 키 설정이 필요합니다</h3>
+            <p style="margin-bottom: 10px; color: #666;">Gemini API 키를 입력해주세요 (한 번만 설정하면 됩니다)</p>
+            <input type="password" id="quickApiKey" placeholder="AIzaSy..." style="width: 100%; padding: 10px; border: 2px solid #667eea; border-radius: 8px; margin-bottom: 10px;">
+            <button onclick="quickSaveApiKey()" style="width: 100%; padding: 10px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer;">API 키 저장하고 시작하기</button>
+        </div>
+        
         <div class="chat-messages" id="chatMessages">
             <div class="message haeun">
                 <div class="message-content">
@@ -392,8 +400,42 @@
                 localStorage.setItem('gemini_api_key', apiKey);
                 closeApiKeyModal();
                 addMessage('API 키가 저장되었습니다! 이제 대화를 시작할 수 있어요.', false);
+                checkApiKey(); // API 키 확인
             } else {
                 alert('올바른 API 키를 입력해주세요 (AIzaSy...로 시작)');
+            }
+        }
+        
+        // 빠른 API 키 저장
+        function quickSaveApiKey() {
+            const input = document.getElementById('quickApiKey');
+            const apiKey = input.value.trim();
+            if (apiKey && apiKey.startsWith('AIza')) {
+                localStorage.setItem('gemini_api_key', apiKey);
+                document.getElementById('apiInputSection').style.display = 'none';
+                addMessage('API 키가 저장되었습니다! 이제 대화를 시작할 수 있어요.', false);
+            } else {
+                alert('올바른 API 키를 입력해주세요 (AIzaSy...로 시작)');
+            }
+        }
+        
+        // API 키 확인
+        function checkApiKey() {
+            const stored = localStorage.getItem('gemini_api_key');
+            const apiInputSection = document.getElementById('apiInputSection');
+            
+            if (!stored || stored === 'demo-key-only' || stored === 'YOUR_API_KEY_HERE') {
+                // API 키가 없으면 입력 섹션 표시
+                if (apiInputSection) {
+                    apiInputSection.style.display = 'block';
+                }
+                return false;
+            } else {
+                // API 키가 있으면 입력 섹션 숨김
+                if (apiInputSection) {
+                    apiInputSection.style.display = 'none';
+                }
+                return true;
             }
         }
         
@@ -651,6 +693,12 @@
         // 초기화 함수
         function initializeChatbot() {
             console.log('챗봇 초기화 시작...');
+            
+            // API 키 확인
+            if (!checkApiKey()) {
+                console.log('API 키가 설정되지 않음 - 입력 폼 표시');
+                return; // API 키가 없으면 초기화 중단
+            }
 
             // API 키 입력 이벤트 설정
             setupApiKeyInput();
