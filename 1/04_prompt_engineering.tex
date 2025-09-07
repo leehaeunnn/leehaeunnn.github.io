@@ -1,0 +1,135 @@
+\section{프롬프트 엔지니어링 - AI와의 효과적인 소통}
+
+\subsection{프롬프트 엔지니어링의 발견}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/1_prompt_discovery.png}
+    \caption{프롬프트에 따른 AI 응답 품질 차이}
+    \label{fig:prompt_discovery}
+\end{figure}
+
+AI 프로젝트를 진행하면서 가장 중요한 깨달음은 `어떻게 묻느냐'가 결과를 좌우한다는 것이었습니다. 같은 작업을 요청해도 프롬프트 구성에 따라 완전히 다른 결과가 나왔습니다.
+
+\subsection{체계적인 프롬프트 개발 과정}
+
+\subsubsection{1단계: 기본 프롬프트}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/1_prompt_basic.png}
+    \caption{초기의 단순한 프롬프트}
+    \label{fig:prompt_basic}
+\end{figure}
+
+초기 프롬프트
+\begin{verbatim}
+"이 수학 문제를 채점해줘"
+\end{verbatim}
+
+문제점은 일관성 없는 채점 기준과 구조화되지 않은 출력, 그리고 교육적 피드백의 부재였습니다.
+
+\subsubsection{2단계: 역할 부여}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/1_prompt_role.png}
+    \caption{역할을 부여한 프롬프트}
+    \label{fig:prompt_role}
+\end{figure}
+
+개선된 프롬프트
+\begin{verbatim}
+"당신은 경험 많은 수학 교사입니다. 
+학생의 답안을 교육적 관점에서 채점해주세요."
+\end{verbatim}
+
+개선점은 더 교육적인 접근과 일관된 톤, 전문가적 관점의 반영이었습니니다.
+
+\subsubsection{3단계: 구조화된 지시}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/1_prompt_structured.png}
+    \caption{구조화된 프롬프트 템플릿}
+    \label{fig:prompt_structured}
+\end{figure}
+
+최종 프롬프트 구조는 역할 정의, 맥락 제공, 구체적 지시, 출력 형식, 제약 조건의 순서로 구성됐습니다.
+
+\subsection{프롬프트 최적화 기법}
+
+\subsubsection{Few-shot Learning}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/1_prompt_fewshot.png}
+    \caption{Few-shot 예시를 활용한 프롬프트}
+    \label{fig:prompt_fewshot}
+\end{figure}
+
+예시를 포함한 프롬프트로 AI의 이해도를 높였습니다. 2–3개의 구체적 예시를 제시하고 원하는 출력 형식을 시연했으며 엣지 케이스도 포함했습니다.
+
+\subsubsection{Chain of Thought}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/1_prompt_cot.png}
+    \caption{Chain of Thought 프롬프팅}
+    \label{fig:prompt_cot}
+\end{figure}
+
+단계별 사고 과정을 유도하는 프롬프트
+\begin{verbatim}
+"단계별로 생각해봅시다:
+1. 먼저 문제에서 요구하는 것을 파악
+2. 학생의 접근 방법 분석
+3. 각 단계의 정확성 확인
+4. 최종 평가와 피드백"
+\end{verbatim}
+
+\subsection{프롬프트 테스팅과 개선}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/1_prompt_testing.png}
+    \caption{A/B 테스트를 통한 프롬프트 개선}
+    \label{fig:prompt_testing}
+\end{figure}
+
+테스트 프로세스는 100개 샘플의 데이터셋을 구성하고 프롬프트 변형을 생성한 뒤 결과 품질을 측정하는 순서였습니다. 통계적 유의성을 검증하고 최적 프롬프트를 선정해 반복 개선했습니다.
+
+\subsection{도메인별 프롬프트 특화}
+
+\subsubsection{수학 채점용 프롬프트}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/1_prompt_math_specific.png}
+    \caption{수학 도메인 특화 프롬프트}
+    \label{fig:prompt_math_specific}
+\end{figure}
+
+수학 특화 요소로는 수식 표기법 지시와 부분 점수 기준의 명시가 있었습니다. 오류 유형을 분류하고 학년별 난이도를 조정해 평가를 표준화했습니다.
+
+\subsubsection{대화형 키오스크용 프롬프트}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/1_prompt_kiosk_specific.png}
+    \caption{키오스크 도메인 특화 프롬프트}
+    \label{fig:prompt_kiosk_specific}
+\end{figure}
+
+키오스크 특화 요소로는 친근한 말투와 단순한 질문 구성이 핵심이었습니다. 오류 복구 시나리오를 마련하고 확인 절차를 포함해 실수를 줄였습니다.
+
+\subsection{프롬프트 엔지니어링의 교훈}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/1_prompt_lessons.png}
+    \caption{프롬프트 엔지니어링 핵심 원칙}
+    \label{fig:prompt_lessons}
+\end{figure}
+
+핵심 원칙은 명확성과 구체성, 표준화된 구조의 일관성, 충분한 배경 정보를 담는 맥락성, 그리고 측정 가능한 결과의 검증성이었습니다.

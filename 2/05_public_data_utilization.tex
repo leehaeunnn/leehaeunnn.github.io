@@ -1,0 +1,37 @@
+\section{공공데이터 활용}
+
+\subsection{대전시 통합 교통 데이터 수집과 통합}
+본 프로젝트는 2025 대전광역시 공공데이터 활용 창업경진대회 아이디어 부문에 출품된 ``대전 타슈-지하철-버스 날씨와 시간을 고려한 최적 경로 탐색 및 AI 예측 서비스''의 일환으로 개발되었습니다. OpenStreetMap 도로망 데이터, 대전시 지하철 22개역 정보(반석역부터 판암역까지), 타슈 대여소 실시간 현황(2026년까지 1,500개소 확대 예정), 주요 버스 정류장 29개소 및 기타 교통거점 68개소를 통합하여 총 216개 노드와 1,847개 엣지로 구성된 그래프 기반 교통 네트워크를 구축했습니다.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/2_data_pipeline.png}
+    \caption{멀티모달 교통 데이터 통합 파이프라인}
+    \label{fig:data_pipeline}
+\end{figure}
+
+\subsection{실시간 처리와 경로 최적화}
+OSRM(Open Source Routing Machine) API를 활용하여 실제 도로 기반 경로를 계산하고, Dijkstra 알고리즘(시간복잡도 O((V+E)logV))으로 최단 경로를 탐색했습니다. 시간대별 혼잡도(출퇴근 시간 지하철 180\%, 버스 160\% 가중치), 날씨 조건(우천시 타슈 200\%, 도보 250\% 페널티), 타슈 가용성을 동적 가중치로 반영하여 5가지 우선순위 모드(시간, 비용, 편안함, 친환경, 날씨)를 제공합니다.
+
+\paragraph{핵심 알고리즘 구현 (본인 담당).} 본인이 메인 프로그래머로서 JavaScript 기반 우선순위 큐(Priority Queue)와 가상 노드(Virtual Node) 개념을 직접 구현하여 임의 지점에서 출발/도착이 가능하도록 개발했습니다. 30분 이내 무료 환승 로직과 교통수단별 환승 시간을 차등 적용하는 알고리즘을 설계했으며, 실제 도로 경로 기반 계산으로 직선거리 대비 평균 1.4배 정확한 거리를 산출하고, 평균 경로 탐색 시간 50-100ms를 달성했습니다.
+
+\subsection{공공데이터 활용 창업경진대회 프로젝트}
+\label{subsec:gonggong_summary}
+\textbf{프로젝트명}: 대전 타슈-지하철-버스 날씨와 시간을 고려한 최적 경로 탐색 및 AI 예측 서비스\newline
+\textbf{참가팀}: 김지훈(대전동신과학고, 팀장), 이하은(전남과학고, 메인 프로그래밍), 서민준(부산일과학고)\newline
+\textbf{본인 역할}: \textbf{메인 프로그래밍 담당} - Dijkstra 알고리즘 구현, 그래프 자료구조 설계, OSRM API 연동, JavaScript 기반 전체 시스템 개발\newline
+\textbf{지원부문}: 아이디어 부문 (2025년 5월 31일 제출)\newline
+\textbf{핵심 데이터}: OpenStreetMap, OSRM API, 대전시 교통 인프라 데이터\newline
+\textbf{주요 성과}: 경로 계산 시간 50-100ms, 시간 예측 정확도 85\% 향상\newline
+\textbf{특징}: JavaScript 기반 웹 애플리케이션, Leaflet.js 지도 시각화
+
+\paragraph{멀티모달 통합 경로 시스템 (본인 개발).}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{그래프 구조 설계}: 본인이 인접 리스트(Adjacency List) 방식으로 메모리 최적화, 가중치 그래프로 다중 최적화 구현
+    \item \textbf{교통 노드 연결 알고리즘}: 도보 800m(확장시 1.5km), 타슈 5km 이내, 지하철 인접역 간, 버스 실제 노선 연결 로직 개발
+    \item \textbf{실시간 정보 처리}: 타슈 자전거 보유 현황(bikes, docks), 시간대별 혼잡도, 날씨 변화를 동적으로 반영하는 시스템 구현
+    \item \textbf{세그먼트 기반 관리}: 본인이 설계한 RouteCalculator 클래스로 교통수단별 경로 분할 재계산 시스템 개발
+    \item \textbf{인터페이스 개발}: Leaflet.js 기반 인터랙티브 지도, 우클릭 컨텍스트 메뉴, 교통수단별 색상 구분 UI 구현
+    \item \textbf{정책 연계}: 대전시 스마트시티 종합계획(2021-2025) 부합, 2050 탄소중립 목표 기여
+    \item \textbf{기대 효과}: 대중교통 이용률 40\% 향상, CO2 연간 1,500톤 감축, 이동 계획 시간 80\% 단축
+\end{itemize}
