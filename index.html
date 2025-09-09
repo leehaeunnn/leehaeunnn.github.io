@@ -55,11 +55,45 @@
         body {
             font-family: 'Noto Sans KR', sans-serif;
             line-height: 1.8;
-            color: var(--text-color);
+            color: #000000 !important;
             background-color: var(--bg-color);
             transition: all 0.3s ease;
             word-break: keep-all;
             word-wrap: break-word;
+        }
+        
+        /* Force all text to be black */
+        body:not(.dark-mode) p,
+        body:not(.dark-mode) h2,
+        body:not(.dark-mode) h3,
+        body:not(.dark-mode) h4,
+        body:not(.dark-mode) h5,
+        body:not(.dark-mode) h6,
+        body:not(.dark-mode) div,
+        body:not(.dark-mode) span,
+        body:not(.dark-mode) li,
+        body:not(.dark-mode) td,
+        body:not(.dark-mode) th,
+        body:not(.dark-mode) label,
+        body:not(.dark-mode) .intro-text,
+        body:not(.dark-mode) .skill-category p,
+        body:not(.dark-mode) .certificate-item p,
+        body:not(.dark-mode) .certificate-info p,
+        body:not(.dark-mode) .certificate-info h3,
+        body:not(.dark-mode) .project-card p,
+        body:not(.dark-mode) section p,
+        body:not(.dark-mode) section span,
+        body:not(.dark-mode) section div,
+        body:not(.dark-mode) #about p,
+        body:not(.dark-mode) #about h3 {
+            color: #000000 !important;
+        }
+        
+        /* Keep header and nav white */
+        header h1,
+        header .title,
+        nav a {
+            color: #fff !important;
         }
 
         .container {
