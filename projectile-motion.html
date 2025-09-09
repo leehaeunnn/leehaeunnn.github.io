@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>포물선 운동 분석기 - 포트폴리오</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-align: center;
+        }
+        
+        .project-info {
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        
+        .features {
+            background: #f7f7f7;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .features h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .features ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .features li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .features li:last-child {
+            border-bottom: none;
+        }
+        
+        .features li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .demo-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+        
+        .demo-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .note strong {
+            color: #856404;
+        }
+        
+        .workflow {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .workflow-item {
+            text-align: center;
+            padding: 15px;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .workflow-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .workflow-title {
+            font-weight: bold;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>2차원 포물선 운동 비디오 분석기</h1>
+        
+        <div class="project-info">
+            <p>
+                비디오에서 물체의 2차원 포물선 운동을 추적하고 분석하는 Python GUI 애플리케이션입니다. 
+                물리 교육 및 실험 데이터 분석에 활용할 수 있도록 개발되었습니다.
+            </p>
+        </div>
+        
+        <div class="tech-stack">
+            <span class="tech-badge">Python 3</span>
+            <span class="tech-badge">OpenCV</span>
+            <span class="tech-badge">NumPy</span>
+            <span class="tech-badge">Matplotlib</span>
+            <span class="tech-badge">Tkinter</span>
+            <span class="tech-badge">PIL</span>
+        </div>
+        
+        <div class="features">
+            <h2>주요 기능</h2>
+            <ul>
+                <li>비디오 파일 불러오기 및 프레임 단위 분석</li>
+                <li>수동/자동 물체 추적 모드</li>
+                <li>실제 거리 스케일 보정 (calibration)</li>
+                <li>좌표계 원점 설정 기능</li>
+                <li>위치, 속도, 가속도 데이터 실시간 계산</li>
+                <li>포물선 궤적 시각화 및 그래프 생성</li>
+                <li>데이터 JSON 형식 저장/불러오기</li>
+                <li>한글 인터페이스 지원</li>
+            </ul>
+        </div>
+        
+        <div class="demo-section">
+            <h2>작동 원리</h2>
+            <div class="workflow">
+                <div class="workflow-item">
+                    <div class="workflow-icon"><i class="fas fa-video"></i></div>
+                    <div class="workflow-title">1. 비디오 로드</div>
+                    <div>실험 비디오 파일 선택</div>
+                </div>
+                <div class="workflow-item">
+                    <div class="workflow-icon"><i class="fas fa-ruler"></i></div>
+                    <div class="workflow-title">2. 스케일 보정</div>
+                    <div>실제 거리 기준 설정</div>
+                </div>
+                <div class="workflow-item">
+                    <div class="workflow-icon"><i class="fas fa-crosshairs"></i></div>
+                    <div class="workflow-title">3. 물체 추적</div>
+                    <div>프레임별 위치 마킹</div>
+                </div>
+                <div class="workflow-item">
+                    <div class="workflow-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="workflow-title">4. 데이터 분석</div>
+                    <div>물리량 계산 및 시각화</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>실행 방법</h2>
+            <div class="code-block">
+# 필요한 패키지 설치
+pip install -r requirements.txt
+
+# 프로그램 실행
+python video_analyzer.py
+            </div>
+        </div>
+        
+        <div class="note">
+            <strong>참고:</strong> 이 프로그램은 Python 3.7 이상과 시스템에 설치된 OpenCV 라이브러리가 필요합니다. 
+            Windows 환경에서는 Visual C++ Redistributable이 필요할 수 있습니다.
+        </div>
+        
+        <div class="button-group">
+            <a href="index.html" class="btn btn-secondary">← 메인으로 돌아가기</a>
+            <a href="https://github.com/leehaeunnn/Projectile-motion" target="_blank" class="btn btn-primary">GitHub 저장소 →</a>
+        </div>
+    </div>
+</body>
+</html>

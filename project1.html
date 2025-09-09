@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -190,3 +191,197 @@
     </footer>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로젝트 1 - 이하은의 홈페이지</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --bg-color: #fff;
+            --text-color: #333;
+            --border-color: #eee;
+        }
+
+        body {
+            font-family: 'Nanum Gothic', 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 네비게이션 */
+        nav {
+            background-color: var(--secondary-color);
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            margin: 0 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        h1, h2, h3 {
+            color: var(--secondary-color);
+        }
+
+        .project-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .project-img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .project-details {
+            background-color: var(--bg-color);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tech-used {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .tech-tag {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .go-back {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .go-back:hover {
+            background-color: var(--primary-color);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">홈</a></li>
+            <li><a href="index.html#projects">다른 프로젝트</a></li>
+            <li><a href="project1_en.html">English</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="project-header">
+            <h1>프로젝트 1: 반응형 웹 포트폴리오</h1>
+            <img src="project1.jpg" alt="프로젝트 1 상세 이미지" class="project-img">
+        </div>
+
+        <div class="project-details">
+            <h2>프로젝트 개요</h2>
+            <p>이 프로젝트는 반응형 웹 디자인 기술을 활용하여 다양한 기기에서 최적화된 사용자 경험을 제공하는 개인 포트폴리오 웹사이트를 개발한 것입니다.</p>
+
+            <h2>사용된 기술</h2>
+            <div class="tech-used">
+                <span class="tech-tag">HTML5</span>
+                <span class="tech-tag">CSS3</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">Responsive Design</span>
+                <span class="tech-tag">CSS Grid</span>
+                <span class="tech-tag">Flexbox</span>
+            </div>
+
+            <h2>주요 기능</h2>
+            <ul>
+                <li>모바일 우선 접근 방식을 사용한 반응형 레이아웃</li>
+                <li>CSS Grid 및 Flexbox를 활용한 모던 레이아웃</li>
+                <li>다크 모드 / 라이트 모드 전환 기능</li>
+                <li>프로젝트 갤러리 및 모달 창</li>
+                <li>접근성 고려한 디자인</li>
+                </ul>
+
+            <h2>개발 과정</h2>
+            <p>이 프로젝트는 사용자 중심 디자인 원칙을 따라 개발되었으며, 모바일 우선 접근 방식을 적용하였습니다. 초기 와이어프레임 설계부터 시작하여 프로토타입을 만들고, 사용자 피드백을 반영하여 지속적으로 개선했습니다.</p>
+            
+            <h2>배운 점</h2>
+            <p>이 프로젝트를 통해 반응형 웹 디자인의 중요성과 다양한 화면 크기에 적응하는 레이아웃을 설계하는 방법을 배웠습니다. 또한 사용자 경험을 최우선으로 고려하는 디자인 사고 방식을 발전시킬 수 있었습니다.</p>
+            
+            <a href="index.html#projects" class="go-back">
+                <i class="fas fa-arrow-left"></i> 모든 프로젝트로 돌아가기
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 이하은. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+>>>>>>> 35db824aabac019eb3c9fd58733346f72117a18b

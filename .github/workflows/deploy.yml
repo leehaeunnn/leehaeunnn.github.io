@@ -1,0 +1,55 @@
+name: Deploy API Config
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Create API config from template
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      run: |
+        # Check if template exists
+        if [ -f "api-config-template.js" ]; then
+          # Replace placeholder with actual API key
+          sed "s/GEMINI_API_KEY_PLACEHOLDER/${GEMINI_API_KEY}/g" api-config-template.js > api-config.js
+          echo "✅ API config created successfully"
+          
+          # Show first 50 chars of key for debugging (safely)
+          echo "API Key starts with: ${GEMINI_API_KEY:0:10}..."
+        else
+          # Create new config file if template doesn't exist
+          cat > api-config.js << EOF
+const API_CONFIG = {
+  GEMINI_API_KEY: '${GEMINI_API_KEY}'
+};
+EOF
+          echo "✅ API config created from scratch"
+        fi
+    
+    - name: Commit and push if changed
+      run: |
+        git config --global user.name 'GitHub Actions Bot'
+        git config --global user.email 'actions@github.com'
+        
+        # Check if api-config.js changed
+        if ! git diff --quiet api-config.js; then
+          git add api-config.js
+          git commit -m "Update API config [skip ci]"
+          git push
+          echo "✅ API config pushed to repository"
+        else
+          echo "ℹ️ No changes to API config"
+        fi
