@@ -3,27 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이하은의 연구</title>
+    <title>이하은 포트폴리오 | 전남과학고 학생 개발자</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/portfolio-style.css">
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="api-config.js" onerror="console.log('API config loading from localStorage')"></script>
+    <script src="js/common-utils.js"></script>
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #34495e;
-            --accent-color: #3498db;
-            --bg-color: #fff;
-            --text-color: #2c3e50;
-            --border-color: #ecf0f1;
-            --section-bg: #f8f9fa;
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #e94560;
+            --bg-color: #f5f5f5;
+            --text-color: #333;
+            --border-color: #e0e0e0;
+            --section-bg: #ffffff;
             --card-bg: #ffffff;
-            --hover-color: #2980b9;
-            --gradient-start: #2c3e50;
-            --gradient-end: #3498db;
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --hover-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            --hover-color: #c23651;
+            --gradient-start: #1a1a2e;
+            --gradient-end: #0f3460;
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            --hover-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
         }
 
         .dark-mode {
@@ -66,13 +69,13 @@
         }
 
         nav {
-            background: var(--primary-color);
-            padding: 1rem 0;
+            background: rgba(26, 26, 46, 0.95);
+            padding: 0.8rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px var(--shadow-color);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
@@ -85,13 +88,13 @@
         }
 
         nav a {
-            color: #fff;
+            color: rgba(255, 255, 255, 0.9);
             text-decoration: none;
-            font-weight: 500;
-            font-size: 1.1rem;
+            font-weight: 400;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
             position: relative;
         }
 
@@ -117,11 +120,11 @@
         }
 
         header {
-            padding: 10rem 0 6rem;
+            padding: 6rem 0 3rem;
             text-align: center;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
             color: #fff;
-            margin-bottom: 4rem;
+            margin-bottom: 2rem;
             position: relative;
             overflow: hidden;
         }
@@ -160,10 +163,10 @@
         }
 
         h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            letter-spacing: -1px;
         }
 
         .title {
@@ -174,11 +177,11 @@
         }
 
         section {
-            padding: 4rem 2rem;
-            margin-bottom: 4rem;
+            padding: 2.5rem 2rem;
+            margin-bottom: 2rem;
             background: var(--section-bg);
-            border-radius: 16px;
-            box-shadow: var(--card-shadow);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -696,6 +699,7 @@
             <li><a href="#publications">GitHub 프로젝트</a></li>
             <li><a href="#guestbook">방명록</a></li>
             <li><a href="#contact">연락처</a></li>
+            <li><a href="chatbot.html">채팅</a></li>
             <li><a href="en.html">English</a></li>
         </ul>
     </nav>
@@ -750,6 +754,20 @@
 
         <section id="publications" data-aos="fade-up">
             <h2>GitHub 프로젝트</h2>
+            
+            <!-- 주요 프로젝트 직접 링크 -->
+            <div style="margin-bottom: 30px; display: flex; gap: 15px; flex-wrap: wrap;">
+                <a href="math-scoring-upload.html" style="padding: 10px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 25px; display: inline-block; transition: transform 0.3s;">
+                    AI 수학 채점 시스템 (Gemini API)
+                </a>
+                <a href="projectile-simulator.html" style="padding: 10px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 25px; display: inline-block; transition: transform 0.3s;">
+                    포물선 운동 시뮬레이터
+                </a>
+                <a href="chatbot.html" style="padding: 10px 20px; background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%); color: white; text-decoration: none; border-radius: 25px; display: inline-block; transition: transform 0.3s;">
+                    <i class="fas fa-comments"></i> 이하은과 AI 채팅하기
+                </a>
+            </div>
+            
             <div id="github-projects" class="publications">
                 <div class="loading">프로젝트 불러오는 중...</div>
             </div>
@@ -981,7 +999,9 @@
                     'leehaeunnn.github.io': '개인 포트폴리오 웹사이트입니다. 웹 개발 기술과 디자인 요소를 활용하여 제 프로젝트와 연구 내용을 소개합니다.',
                     'Projectile-motion': '물리학의 포물선 운동을 시뮬레이션한 프로젝트입니다. 중력, 초기 속도 및 각도에 따른 물체 이동 경로를 계산합니다.',
                     'smartgrid-with-CRT': 'CRT 기술을 활용하여 에너지 배분을 최적화하고 재생 에너지원을 통합하는 스마트 그리드 시뮬레이션입니다. 수요 변동에 따라 동적으로 조정되며, 예측 분석을 통해 시스템의 그리드 복원력을 향상시키고 지속 가능한 자체 조절 에너지 네트워크 개발을 지원합니다.',
-                    'Wimshusrt-Machine': '윔스허스트 발전기를 시뮬레이션한 프로젝트입니다. 두 개의 회전 디스크가 정전기를 유도하여 전하를 축적하는 과정을 재현하고, 브러시와 금속 구를 통해 이동하는 전하를 시각적으로 표현했습니다.'
+                    'Wimshusrt-Machine': '윔스허스트 발전기를 시뮬레이션한 프로젝트입니다. 두 개의 회전 디스크가 정전기를 유도하여 전하를 축적하는 과정을 재현하고, 브러시와 금속 구를 통해 이동하는 전하를 시각적으로 표현했습니다.',
+                    'NEW-Math-Scoring': 'Next.js와 MongoDB를 활용한 온라인 수학 문제 채점 시스템입니다. LaTeX 수식을 지원하며 자동 채점과 상세한 피드백을 제공합니다.',
+                    'Math-Scoring': 'Next.js와 MongoDB를 활용한 온라인 수학 문제 채점 시스템입니다. LaTeX 수식을 지원하며 자동 채점과 상세한 피드백을 제공합니다.'
                 };
 
                 repos.forEach(repo => {
@@ -1000,12 +1020,25 @@
                             day: 'numeric'
                         });
 
+                        // 프로젝트별 상세 페이지 링크 설정
+                        let projectLink = repo.html_url;
+                        let hasDetailPage = false;
+                        
+                        if (repo.name === 'NEW-Math-Scoring' || repo.name === 'Math-Scoring') {
+                            projectLink = 'math-scoring-upload.html';
+                            hasDetailPage = true;
+                        } else if (repo.name === 'Projectile-motion') {
+                            projectLink = 'projectile-simulator.html';
+                            hasDetailPage = true;
+                        }
+
                         projectElement.innerHTML = `
                             <h3>
                                 <i class="fas fa-code-branch"></i>
-                                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer">
-                                    ${repo.name}
-                                </a>
+                                ${hasDetailPage ? 
+                                    `<a href="${projectLink}">${repo.name}</a>` :
+                                    `<a href="${repo.html_url}" target="_blank" rel="noopener noreferrer">${repo.name}</a>`
+                                }
                             </h3>
                             <p>${description}</p>
                             <div class="project-meta">

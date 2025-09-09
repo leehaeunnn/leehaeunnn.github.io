@@ -1,0 +1,33 @@
+\section{부가 프로젝트: 텍스트 게임 상태 관리 시스템}
+
+본 시스템은 복잡한 상태 전이를 FSM으로 관리했습니다.
+목표는 상태 전이 오류를 줄이는 것이었습니다.
+
+\subsection{아키텍처}
+상태는 이름, 입장, 퇴장, 전이로 구성했습니다.
+전이는 조건 함수로 정의했습니다.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/4_fsm.png}
+    \caption{FSM 구성과 전이 다이어그램}
+    \label{fig:fsm}
+\end{figure}
+
+\begin{lstlisting}[language=Python]
+class GameStateMachine:
+    def __init__(self):
+        self.states, self.current, self.history = {}, None, []
+    def add_state(self, name, on_enter=None, on_exit=None):
+        self.states[name] = {'on_enter': on_enter, 'on_exit': on_exit, 'trans': {}}
+    def add_transition(self, src, dst, cond):
+        self.states[src]['trans'][dst] = cond
+    def transition_to(self, nxt, ctx):
+        if self.current and self.states[self.current]['on_exit']:
+            self.states[self.current]['on_exit'](ctx)
+        self.history.append(self.current)
+        self.current = nxt
+        if self.states[nxt]['on_enter']:
+            self.states[nxt]['on_enter'](ctx)
+\end{lstlisting}
+

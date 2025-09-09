@@ -1,0 +1,194 @@
+\documentclass[10pt,a4paper,twocolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{kotex}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{pdfpages}
+
+% 페이지 설정
+\geometry{
+    a4paper,
+    left=18mm,
+    right=18mm,
+    top=20mm,
+    bottom=25mm
+}
+
+% 줄간격 설정 (논문 스타일)
+\linespread{1.05}
+
+% 섹션 제목 스타일
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% 페이지 스타일
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% 코드 스타일 설정
+\lstdefinelanguage{JavaScript}{
+    keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break, const, let, class, this},
+    keywordstyle=\color{blue}\bfseries,
+    ndkeywords={},
+    ndkeywordstyle=\color{darkgray}\bfseries,
+    identifierstyle=\color{black},
+    sensitive=false,
+    comment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    commentstyle=\color{purple}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    morestring=[b]',
+    morestring=[b]"
+}
+
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=none,
+    numbers=none,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{red},
+    inputencoding=utf8,
+    extendedchars=true
+}
+
+% 하이퍼링크 설정
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={특기자전형 입증자료},
+    pdfauthor={이하은},
+}
+
+% 이미지가 없을 때 최소 공간 차지하도록 설정
+\newcommand{\includeimage}[3][width=0.8\textwidth]{%
+    \IfFileExists{#2}{%
+        \includegraphics[#1]{#2}%
+    }{%
+        \fbox{\small\textit{[#3]}}% 작은 텍스트 박스
+    }%
+}
+
+% includegraphics 재정의
+\let\oldincludegraphics\includegraphics
+\renewcommand{\includegraphics}[2][]{%
+    \IfFileExists{#2}{%
+        \oldincludegraphics[#1]{#2}%
+    }{%
+        \fbox{\small\textit{[Image]}}% 기본 placeholder
+    }%
+}
+
+\title{\Large\bfseries KAIST 특기자전형 입증자료\\
+\large 중요도순 4개 특기 입증자료}
+\author{이하은}
+\date{\today}
+
+\begin{document}
+
+% 제목 페이지
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+% 전체 목차
+\tableofcontents
+\newpage
+
+% 특기 1: AI/LLM API 활용한 문제 해결
+\twocolumn[\begin{@twocolumnfalse}
+\section*{특기 1: AI/LLM API 활용한 문제 해결}
+\addcontentsline{toc}{section}{특기 1: AI/LLM API 활용한 문제 해결}
+\vspace{0.5cm}
+\end{@twocolumnfalse}]
+% 각 특기 섹션 시작 시 번호 초기화
+\setcounter{section}{0}\setcounter{subsection}{0}\setcounter{subsubsection}{0}
+\input{1/01_overview}
+\input{1/02_math_grading_main}
+\input{1/03_ai_kiosk_sub}
+\input{1/04_prompt_engineering}
+\input{1/05_social_impact}
+\input{1/06_growth_story}
+\clearpage
+
+% 특기 2: 데이터 기반 도시 문제 해결 플랫폼
+\twocolumn[\begin{@twocolumnfalse}
+\section*{특기 2: 데이터 기반 도시 문제 해결 플랫폼}
+\addcontentsline{toc}{section}{특기 2: 데이터 기반 도시 문제 해결 플랫폼}
+\vspace{0.5cm}
+\end{@twocolumnfalse}]
+\setcounter{section}{0}\setcounter{subsection}{0}\setcounter{subsubsection}{0}
+\input{2/01_overview}
+\input{2/02_daejeon_transport_main}
+\input{2/03_fire_evacuation_sub}
+\input{2/04_graph_algorithms}
+\input{2/05_public_data_utilization}
+\input{2/06_policy_connection}
+\input{2/07_growth_story}
+\clearpage
+
+% 특기 3: 자기주도적 프로그래밍 학습과 도구 활용
+\twocolumn[\begin{@twocolumnfalse}
+\section*{특기 3: 자기주도적 프로그래밍 학습과 도구 활용}
+\addcontentsline{toc}{section}{특기 3: 자기주도적 프로그래밍 학습과 도구 활용}
+\vspace{0.5cm}
+\end{@twocolumnfalse}]
+\setcounter{section}{0}\setcounter{subsection}{0}\setcounter{subsubsection}{0}
+\input{3/01_overview}
+\input{3/02_kaist_srp_journey}
+\input{3/03_claude_code_utilization}
+\input{3/04_zombiego_first_project}
+\input{3/05_learning_methodology}
+\input{3/06_collaboration_tools}
+\input{3/07_growth_story}
+\input{3/08_portfolio_website}
+\clearpage
+
+% 특기 4: 머신러닝과 에너지 효율화
+\twocolumn[\begin{@twocolumnfalse}
+\section*{특기 4: 머신러닝과 에너지 효율화}
+\addcontentsline{toc}{section}{특기 4: 머신러닝과 에너지 효율화}
+\vspace{0.5cm}
+\end{@twocolumnfalse}]
+\setcounter{section}{0}\setcounter{subsection}{0}\setcounter{subsubsection}{0}
+\input{4/01_overview}
+\input{4/02_smart_grid_main}
+\input{4/03_time_series_prediction}
+\input{4/04_ml_ensemble_models}
+\input{4/05_realtime_processing}
+\input{4/06_text_game_state_management}
+\input{4/07_growth_story}
+\clearpage
+
+% 특기 5 섹션 제거
+
+% 맺음말 추가
+\input{conclusion}
+
+% 부록 섹션 제거 - PDF 원문 포함하지 않음
+
+\end{document}

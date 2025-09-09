@@ -1,0 +1,66 @@
+\section{실시간 환경 센서 기반 지능형 화재 대피 경로 안내 시뮬레이션}
+
+\subsection{제45회 전라남도학생과학발명품경진대회 출품작}
+
+2025년 5월, 제45회 전라남도학생과학발명품경진대회에 출품한 작품으로, 단순한 시뮬레이션이 아니라 실제 화재 상황의 동적 변화를 반영한 지능형 대피 시스템입니다.
+
+\subsection{개발 동기: 생명을 구하는 알고리즘}
+
+기존의 고정된 비상 대피로 안내 표지판은 화재의 실시간 변화를 반영하지 못합니다. 화재와 연기는 예측 불가능하게 확산되며, 안전해 보이던 통로가 순식간에 위험 지역이 될 수 있습니다. IoT 센서 기술과 AI 알고리즘을 결합하여 이 문제를 해결하고자 했습니다.
+
+\subsection{핵심 기술 구현}
+
+\paragraph{동적 환경 시뮬레이션.}
+Python과 Pygame을 사용하여 48×26 그리드 기반의 2D 시뮬레이션을 구현했습니다. GameMap 클래스는 외벽, 내부 벽, 방, 복도, 문 등을 절차적으로 생성하며, ensure\_exit\_path 함수로 플레이어와 탈출구 간 경로 연결성을 보장합니다.
+
+\begin{lstlisting}[language=Python, basicstyle=\footnotesize\ttfamily]
+class EnvironmentData:
+    def __init__(self):
+        self.temp = 20.0
+        self.co = 5
+        self.smoke_level = 0  # Smoke density (0-10)
+        
+    def update(self, fire_intensity=0):
+        if fire_intensity > 0:
+            self.temp += fire_intensity * random.uniform(0.3, 0.8)
+            self.co += fire_intensity * random.uniform(0.5, 2.0)
+            self.smoke_level += fire_intensity * random.uniform(0.05, 0.2)
+\end{lstlisting}
+
+\paragraph{A* 알고리즘 기반 지능형 경로 탐색.}
+단순 최단 거리가 아닌, 환경 위험도를 반영한 최적 경로를 탐색합니다. 온도, 일산화탄소 농도, 연기 농도, 화재 강도에 따라 이동 비용이 기하급수적으로 증가하여 위험 지역을 적극 회피합니다.
+
+\begin{lstlisting}[language=Python, basicstyle=\footnotesize\ttfamily]
+def a_star_search(start_tile, end_tile, game_map):
+    # Calculate environmental danger
+    env_danger = (tile.env_data.temp - 20) * 2.0
+    env_danger += tile.env_data.co * 1.5
+    env_danger += tile.env_data.smoke_level * 3.0
+    if tile.fire_intensity > 0:
+        env_danger += tile.fire_intensity * 50
+    
+    new_cost = current_cost + base_cost + env_danger
+\end{lstlisting}
+
+\paragraph{실시간 센서 시스템.}
+SENSOR\_RANGE(12 타일) 내의 정보만 감지하여 현실적인 제한을 시뮬레이션합니다. 센서 위치를 분산 배치하고 거리에 따른 정보 획득 시간차(time\_offset)를 도입했습니다.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/2_fire_sim.png}
+    \caption{화재 확산과 A* 알고리즘 기반 대피 경로 시각화 (빨간색: 화재, 회색: 연기, 초록색: 안전 경로)}
+    \label{fig:fire_sim}
+\end{figure}
+
+\subsection{차별화된 기술적 성과}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{복합 환경 모델링}: 온도, CO, CO2, 연기, 습도, 먼지 등 6가지 환경 변수 동시 시뮬레이션
+    \item \textbf{동적 경로 재계산}: PATH\_UPDATE\_INTERVAL마다 환경 변화를 반영한 경로 자동 갱신
+    \item \textbf{현실적 화재 확산}: 벽과 문의 확산 지연, 확률적 전파 모델 구현
+    \item \textbf{위험 노출도 시스템}: 플레이어의 누적 위험 노출을 계산하여 게임 오버 조건 설정
+\end{itemize}
+
+\subsection{활용 가능성과 전망}
+
+이 시뮬레이션은 교육 콘텐츠로 활용 가능하며, VR과 접목하여 소방관 훈련 도구로 발전시킬 수 있습니다. 실제 건물 도면과 연동하면 건축 설계 단계에서 피난 안전성을 검증하는 도구가 될 수 있습니다. 향후 강화학습을 도입하여 AI가 스스로 최적 대피 전략을 학습하는 시스템으로 발전시킬 계획입니다.

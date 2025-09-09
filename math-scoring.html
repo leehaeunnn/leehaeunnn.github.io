@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수학 채점 시스템 - 포트폴리오</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-align: center;
+        }
+        
+        .project-info {
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        
+        .features {
+            background: #f7f7f7;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .features h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .features ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .features li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .features li:last-child {
+            border-bottom: none;
+        }
+        
+        .features li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .demo-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+        
+        .demo-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        .screenshot {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .note strong {
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>수학 채점 시스템</h1>
+        
+        <div class="project-info">
+            <p>
+                Next.js와 MongoDB를 활용한 온라인 수학 문제 채점 시스템입니다. 
+                교사들이 문제를 등록하고 학생들의 답안을 효율적으로 채점할 수 있도록 설계되었습니다.
+            </p>
+        </div>
+        
+        <div class="tech-stack">
+            <span class="tech-badge">Next.js 14</span>
+            <span class="tech-badge">React 18</span>
+            <span class="tech-badge">TypeScript</span>
+            <span class="tech-badge">MongoDB</span>
+            <span class="tech-badge">Mongoose</span>
+            <span class="tech-badge">Tailwind CSS</span>
+            <span class="tech-badge">MathJax</span>
+            <span class="tech-badge">React LaTeX</span>
+        </div>
+        
+        <div class="features">
+            <h2>주요 기능</h2>
+            <ul>
+                <li>수학 문제 생성 및 관리</li>
+                <li>LaTeX 수식 렌더링 지원</li>
+                <li>학생 답안 제출 시스템</li>
+                <li>자동 채점 기능</li>
+                <li>상세한 채점 결과 피드백</li>
+                <li>문제별 통계 및 분석</li>
+                <li>반응형 웹 디자인</li>
+                <li>실시간 데이터 업데이트</li>
+            </ul>
+        </div>
+        
+        <div class="demo-section">
+            <h2>프로젝트 구조</h2>
+            <p>
+                이 프로젝트는 다음과 같은 구조로 구성되어 있습니다:
+            </p>
+            <ul style="margin-top: 15px; list-style-type: disc; margin-left: 30px;">
+                <li><strong>/app</strong> - Next.js 앱 라우터 및 페이지 컴포넌트</li>
+                <li><strong>/models</strong> - MongoDB 스키마 정의 (Problem, Submission)</li>
+                <li><strong>/lib</strong> - 데이터베이스 연결 및 유틸리티 함수</li>
+                <li><strong>/api</strong> - RESTful API 엔드포인트</li>
+            </ul>
+        </div>
+        
+        <div class="note">
+            <strong>참고:</strong> 이 프로젝트는 MongoDB 데이터베이스 연결이 필요합니다. 
+            로컬 환경에서 실행하려면 MongoDB 설정과 환경 변수 구성이 필요합니다.
+        </div>
+        
+        <div class="button-group">
+            <a href="index.html" class="btn btn-secondary">← 메인으로 돌아가기</a>
+            <a href="math-scoring-demo.html" class="btn btn-primary">🎮 데모 체험하기</a>
+            <a href="https://github.com/leehaeunnn/NEW-Math-Scoring" target="_blank" class="btn btn-secondary">GitHub 저장소 →</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 name: Auto Commit Changes
 
 on:
@@ -34,4 +35,42 @@ jobs:
             git push
           else
             echo "No changes to commit"
+=======
+name: Auto Commit Changes
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Setup Git
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          
+      - name: Check for changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "Changes detected"
+            git add .
+            git commit -m "Auto-commit: Update website content"
+            git push
+          else
+            echo "No changes to commit"
+>>>>>>> 35db824aabac019eb3c9fd58733346f72117a18b
           fi 

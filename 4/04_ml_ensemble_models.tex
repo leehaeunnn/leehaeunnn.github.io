@@ -1,0 +1,14 @@
+\section{앙상블 모델 구현}
+
+\subsection{구성과 전략}
+앙상블은 LSTM, XGBoost, Prophet, ARIMA로 구성했고 투표 평균과 가중 평균을 적용했습니다. 스태킹으로 메타 학습을 수행하고 베이지안 결합으로 불확실성을 반영했습니다.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/4_ensemble.png}
+    \caption{앙상블 구조와 가중 결합}
+    \label{fig:ensemble}
+\end{figure}
+
+\paragraph{검증 계획.} 시계열 분할로 검증했고 메트릭은 MAPE와 MAE를 병행했습니다.
+

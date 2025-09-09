@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수학 채점 시스템 - 데모</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .demo-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .demo-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .problem-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .problem-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102,126,234,0.2);
+        }
+        
+        .problem-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .problem-content {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            font-size: 1.1em;
+        }
+        
+        .answer-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        
+        .answer-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: transform 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .feedback.incorrect {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .score-display {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .score-display h3 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        
+        .score-value {
+            font-size: 3em;
+            font-weight: bold;
+            color: #764ba2;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .feature-card {
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 25px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 25px;
+            border: 2px solid #667eea;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .latex-render {
+            font-size: 1.2em;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-calculator"></i> 수학 채점 시스템 데모</h1>
+            <p>인터랙티브 데모 - 실제 작동 예시</p>
+        </div>
+        
+        <div class="demo-section">
+            <h2>문제 풀기 체험</h2>
+            
+            <div class="problem-card">
+                <div class="problem-title">문제 1: 이차방정식</div>
+                <div class="problem-content">
+                    다음 방정식의 해를 구하시오:
+                    <div class="latex-render">
+                        \[x^2 - 5x + 6 = 0\]
+                    </div>
+                </div>
+                <input type="text" class="answer-input" id="answer1" placeholder="답을 입력하세요 (예: x=2, x=3)">
+                <button class="submit-btn" onclick="checkAnswer(1)">제출</button>
+                <div class="feedback" id="feedback1"></div>
+            </div>
+            
+            <div class="problem-card">
+                <div class="problem-title">문제 2: 미분</div>
+                <div class="problem-content">
+                    다음 함수의 도함수를 구하시오:
+                    <div class="latex-render">
+                        \[f(x) = 3x^2 + 2x - 1\]
+                    </div>
+                </div>
+                <input type="text" class="answer-input" id="answer2" placeholder="답을 입력하세요 (예: 6x+2)">
+                <button class="submit-btn" onclick="checkAnswer(2)">제출</button>
+                <div class="feedback" id="feedback2"></div>
+            </div>
+            
+            <div class="problem-card">
+                <div class="problem-title">문제 3: 적분</div>
+                <div class="problem-content">
+                    다음 정적분을 계산하시오:
+                    <div class="latex-render">
+                        \[\int_0^2 x^2 \, dx\]
+                    </div>
+                </div>
+                <input type="text" class="answer-input" id="answer3" placeholder="답을 입력하세요 (예: 8/3)">
+                <button class="submit-btn" onclick="checkAnswer(3)">제출</button>
+                <div class="feedback" id="feedback3"></div>
+            </div>
+        </div>
+        
+        <div class="score-display">
+            <h3>현재 점수</h3>
+            <div class="score-value"><span id="score">0</span> / 3</div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>✨ 주요 기능</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                    <h3>자동 채점</h3>
+                    <p>제출 즉시 자동으로 채점되어 결과를 확인할 수 있습니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-square-root-alt"></i></div>
+                    <h3>LaTeX 수식</h3>
+                    <p>MathJax를 이용해 수학 수식을 깔끔하게 표시합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                    <h3>즉각적인 피드백</h3>
+                    <p>정답/오답 여부와 함께 상세한 피드백을 제공합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>진도 추적</h3>
+                    <p>실시간으로 점수와 진행 상황을 확인할 수 있습니다.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>기술 스택</h2>
+            <p>이 프로젝트는 다음 기술들을 사용하여 개발되었습니다:</p>
+            <ul style="list-style-type: none; margin-top: 15px;">
+                <li style="padding: 8px; border-left: 4px solid #667eea; margin-bottom: 10px;">
+                    <strong>Frontend:</strong> Next.js 14, React 18, TypeScript
+                </li>
+                <li style="padding: 8px; border-left: 4px solid #667eea; margin-bottom: 10px;">
+                    <strong>Database:</strong> MongoDB with Mongoose ODM
+                </li>
+                <li style="padding: 8px; border-left: 4px solid #667eea; margin-bottom: 10px;">
+                    <strong>Styling:</strong> Tailwind CSS
+                </li>
+                <li style="padding: 8px; border-left: 4px solid #667eea; margin-bottom: 10px;">
+                    <strong>Math Rendering:</strong> MathJax, React LaTeX
+                </li>
+            </ul>
+        </div>
+        
+        <div style="text-align: center;">
+            <a href="math-scoring.html" class="back-btn">← 프로젝트 설명으로 돌아가기</a>
+        </div>
+    </div>
+    
+    <script>
+        // MathJax 설정
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+        
+        let score = 0;
+        const answers = {
+            1: ['x=2, x=3', 'x=3, x=2', '2, 3', '3, 2', 'x = 2, x = 3', 'x = 3, x = 2'],
+            2: ['6x+2', '6x + 2', 'f\'(x) = 6x + 2', 'f\'(x)=6x+2'],
+            3: ['8/3', '8/3', '2.67', '2.666...', '2⅔']
+        };
+        
+        const answered = {1: false, 2: false, 3: false};
+        
+        function checkAnswer(problemNum) {
+            const userAnswer = document.getElementById(`answer${problemNum}`).value.trim().toLowerCase();
+            const feedback = document.getElementById(`feedback${problemNum}`);
+            
+            const correctAnswers = answers[problemNum].map(a => a.toLowerCase().replace(/\s/g, ''));
+            const normalizedUserAnswer = userAnswer.replace(/\s/g, '');
+            
+            if (correctAnswers.includes(normalizedUserAnswer)) {
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = '<i class="fas fa-check-circle"></i> 정답입니다! 훌륭해요!';
+                
+                if (!answered[problemNum]) {
+                    score++;
+                    answered[problemNum] = true;
+                    document.getElementById('score').textContent = score;
+                }
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = '<i class="fas fa-times-circle"></i> 다시 시도해보세요. 힌트: ' + getHint(problemNum);
+            }
+            
+            feedback.style.display = 'block';
+        }
+        
+        function getHint(problemNum) {
+            const hints = {
+                1: '인수분해를 시도해보세요: (x-a)(x-b) = 0',
+                2: '거듭제곱 미분 규칙을 적용하세요: d/dx(x^n) = nx^(n-1)',
+                3: '적분 공식을 사용하세요: ∫x^n dx = x^(n+1)/(n+1) + C'
+            };
+            return hints[problemNum];
+        }
+        
+        // MathJax 렌더링 트리거
+        setTimeout(() => {
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }, 100);
+    </script>
+</body>
+</html>

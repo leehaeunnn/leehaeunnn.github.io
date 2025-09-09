@@ -1,0 +1,33 @@
+\section{시계열 예측 기법}
+
+\subsection{모델 구성}
+본 구성은 LSTM, GRU, Transformer를 포함하고 통계 모델은 Prophet과 ARIMA를 사용했습니다.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/4_acf_pacf.png}
+    \caption{ACF/PACF 분석과 피처 선택}
+    \label{fig:acf_pacf}
+\end{figure}
+
+\paragraph{전처리 체크리스트.} 결측 보간, 이상치 처리, 표준화, 캘린더 피처 생성을 적용했습니다. 학습·검증·테스트 분리를 엄격히 지켰습니다.
+
+\subsection{전처리 예시}
+\begin{lstlisting}[language=Python]
+def prepare_time_series(df, lookback=168, horizon=24):
+    df['hour'] = df.index.hour
+    df['day_of_week'] = df.index.dayofweek
+    df['month'] = df.index.month
+    df['is_weekend'] = df['day_of_week'].isin([5, 6])
+    for window in [24, 168]:
+        df[f'ma_{window}'] = df['consumption'].rolling(window).mean()
+        df[f'std_{window}'] = df['consumption'].rolling(window).std()
+    for lag in [1, 24, 168]:
+        df[f'lag_{lag}'] = df['consumption'].shift(lag)
+    X, y = [], []
+    for i in range(lookback, len(df) - horizon):
+        X.append(df.iloc[i-lookback:i].values)
+        y.append(df['consumption'].iloc[i:i+horizon].values)
+    return np.array(X), np.array(y)
+\end{lstlisting}
+

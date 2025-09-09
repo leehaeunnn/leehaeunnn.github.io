@@ -10,7 +10,7 @@
             --primary-color: #3498db;
             --secondary-color: #2c3e50;
             --bg-color: #fff;
-            --text-color: #333;
+            --text-color: #000000;
             --border-color: #eee;
         }
 
@@ -19,8 +19,13 @@
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            color: var(--text-color);
+            color: #000000 !important;
             background-color: var(--bg-color);
+        }
+        
+        /* Force all text to be black */
+        p, li, span, div {
+            color: #000000 !important;
         }
 
         .container {
@@ -51,14 +56,14 @@
         }
 
         nav a {
-            color: white;
+            color: white !important;
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s;
         }
 
         nav a:hover {
-            color: var(--primary-color);
+            color: var(--primary-color) !important;
         }
 
         header {
@@ -69,7 +74,7 @@
         }
 
         h1, h2, h3 {
-            color: var(--secondary-color);
+            color: var(--secondary-color) !important;
         }
 
         .project-header {
@@ -94,6 +99,14 @@
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
+        
+        .project-details p {
+            color: #000000 !important;
+        }
+        
+        .project-details li {
+            color: #000000 !important;
+        }
 
         .tech-used {
             display: flex;
@@ -104,7 +117,7 @@
 
         .tech-tag {
             background-color: var(--primary-color);
-            color: white;
+            color: white !important;
             padding: 5px 15px;
             border-radius: 20px;
             font-size: 0.9em;
@@ -115,7 +128,7 @@
             margin-top: 20px;
             padding: 10px 20px;
             background-color: var(--secondary-color);
-            color: white;
+            color: white !important;
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s;
@@ -131,7 +144,10 @@
             padding-top: 20px;
             border-top: 1px solid var(--border-color);
             font-size: 0.9em;
-            color: #777;
+        }
+        
+        footer p {
+            color: #777 !important;
         }
     </style>
 </head>

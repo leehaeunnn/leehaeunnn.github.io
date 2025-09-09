@@ -1,0 +1,30 @@
+\section{실시간 데이터 처리}
+
+\subsection{파이프라인}
+본 파이프라인은 Kafka로 스트리밍을 처리하고 Redis로 예측을 캐싱합니다. WebSocket으로 업데이트를 전송하고 Docker로 배포 일관성을 확보합니다.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/4_stream_arch.png}
+    \caption{스트리밍 처리 아키텍처 개요}
+    \label{fig:stream_arch}
+\end{figure}
+
+\subsection{구현}
+\begin{lstlisting}[language=Python]
+class RealTimeProcessor:
+    def __init__(self):
+        self.consumer = KafkaConsumer(
+            'energy_data', bootstrap_servers=['localhost:9092'],
+            value_deserializer=lambda m: json.loads(m.decode('utf-8')))
+        self.redis = redis.StrictRedis()
+        self.model = load_model('energy_predictor.h5')
+    def process(self, buffer: deque):
+        for msg in self.consumer:
+            data = msg.value
+            buffer.append(data)
+            if len(buffer) == 168:
+                pred = self.model.predict(np.array(buffer))
+                self.redis.setex(f"pred:{data['timestamp']}", 3600, json.dumps(pred.tolist()))
+\end{lstlisting}
+
