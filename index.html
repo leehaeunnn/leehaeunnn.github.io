@@ -62,14 +62,14 @@
             word-wrap: break-word;
         }
         
-        /* Force all text to be black */
+        /* Force all text to be black EXCEPT header */
         body:not(.dark-mode) p,
         body:not(.dark-mode) h2,
         body:not(.dark-mode) h3,
         body:not(.dark-mode) h4,
         body:not(.dark-mode) h5,
         body:not(.dark-mode) h6,
-        body:not(.dark-mode) div,
+        body:not(.dark-mode) div:not(header div):not(.profile-container div),
         body:not(.dark-mode) span,
         body:not(.dark-mode) li,
         body:not(.dark-mode) td,
