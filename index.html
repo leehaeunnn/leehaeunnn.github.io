@@ -903,7 +903,7 @@
             console.log('Supabase 클라이언트 생성 완료');
             
             // 연결 테스트
-            supabaseClient.from('leehaeunnn guest book').select('count').then(({ data, error }) => {
+            supabaseClient.from('guestbook').select('count').then(({ data, error }) => {
                 if (error) {
                     console.error('Supabase 연결 테스트 실패:', error);
                 } else {
@@ -919,7 +919,7 @@
             async function loadMessages() {
                 try {
                     const { data, error } = await supabaseClient
-                        .from('leehaeunnn guest book')
+                        .from('guestbook')
                         .select('*')
                         .order('created_at', { ascending: false });
 
@@ -995,7 +995,7 @@
 
                     try {
                         const { error } = await supabaseClient
-                            .from('leehaeunnn guest book')
+                            .from('guestbook')
                             .insert([formData]);
 
                         if (error) throw error;
